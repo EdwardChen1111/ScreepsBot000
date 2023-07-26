@@ -11,10 +11,6 @@ let roleRespawn = {
             let storageId = Memory.creeps[name].storageID;
             let dospawn = false;
             
-            if (name == 'E15S38_Outworker000') {
-                name = 'E14S37_Outworker000';
-            }
-            
             if (type == 'worker') {
                 dospawn = true;
             } else if (type == 'harvester') {
