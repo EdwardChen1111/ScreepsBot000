@@ -24,7 +24,7 @@ let roleRespawn = {
                     dospawn = true;
                 } else if (type == 'outbuilder') {
                     dospawn = true;
-                } else if (type == 'claimer' && Game.getObjectById(sourceId).reservation != undefined && Game.getObjectById(sourceId).reservation.ticksToEnd < 4600) {
+                } else if (type == 'claimer' && (Game.getObjectById(sourceId).reservation == undefined || Game.getObjectById(sourceId).reservation.ticksToEnd < 4600)) {
                     dospawn = true;
                 }
             } else {
