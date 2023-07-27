@@ -20,10 +20,8 @@ let roleRespawn = {
             } else if (Game.getObjectById(sourceId) == null || Game.getObjectById(sourceId).reservation == undefined || Game.getObjectById(sourceId).reservation.ticksToEnd < 4000) {
                 dospawn = true;
             }
-        } else {
-            if (type == 'army') {
+        } else if (targets != '' && type == 'army'){
                 dospawn = true;
-            }
         }
             
         if (targetsinvtow != '') {
