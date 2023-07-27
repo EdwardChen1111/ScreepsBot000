@@ -71,7 +71,7 @@ let roleRoom = {
         if (spawn != '') {
             for (let num in spawn[0].memory.appendrange) {
                 let appendroom = Game.rooms[spawn[0].memory.appendrange[num]];
-                if (appendroom.controller != undefined && (appendroom.controller.reservation != undefined || appendroom.controller.owner != undefined)) {
+                if (appendroom != undefined && appendroom.controller != undefined && (appendroom.controller.reservation != undefined || appendroom.controller.owner != undefined)) {
                     targets.push(...appendroom.find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'Chenwu')}}));
                     targetsinvtow.push(...appendroom.find(FIND_HOSTILE_STRUCTURES, {filter: (object) => {return (object.owner.username == 'Invader')}}));
                 }
