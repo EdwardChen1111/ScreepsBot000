@@ -83,7 +83,7 @@ let roleRoom = {
         }
         
         for (let name in Memory.creeps) {
-            if (Memory.creeps[name].spawn == roomname && spawn != '') {
+            if (!Game.creeps[name] && Memory.creeps[name].spawn == roomname && spawn != '') {
                 roleRespawn.check(name, targets, targetsinvtow, spawn[0].name);
             }
         }
