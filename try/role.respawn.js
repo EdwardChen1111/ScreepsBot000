@@ -2,7 +2,6 @@ var roleRespawn = {
     check: function(name) {
 
         var flagA = Game.flags['Farm'];
-        var flagB = Game.flags['Attack'];
         let type = Memory.creeps[name].role;
         let body = Memory.creeps[name].body;
         let sourceID = Memory.creeps[name].sourceID;
@@ -36,11 +35,9 @@ var roleRespawn = {
                         dospawn = true;
                     } 
                 }
-                if(flagB != undefined){
-                    if (type == 'soldier') {
-                        dospawn = true;
-                    } 
-                }
+                if (type == 'soldier') {
+                    dospawn = true;
+                } 
                 if (type == 'builder') {
                     dospawn = true;
                 } 
@@ -64,6 +61,14 @@ var roleRespawn = {
                 }
                 else if (type == 'outB') {
                     dospawn = true;
+                }
+                else if (type == 'outG') {
+                    dospawn = true;
+                }
+                else if (type == 'outAll') {
+                    dospawn = true;
+                    troom = 'E10S35';
+                    type = 'outG'
                 }
             } 
             else {
