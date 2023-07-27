@@ -13,7 +13,7 @@ let roleSoldier = {
                     creep.attack(clost);
                 }
             } else {
-                let way = new RoomPosition(24, 24, creep.memory.hroom);
+                let way = new RoomPosition(19, 12, creep.memory.hroom);
                 creep.moveTo(way);
             }
         } else {
