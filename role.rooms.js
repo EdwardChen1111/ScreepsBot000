@@ -83,14 +83,14 @@ let roleRoom = {
         }
         
         for (let name in Memory.creeps) {
-            if (!Game.creeps[name] && Memory.creeps[name].spawn == roomname && spawn != '') {
+            if (!Game.creeps[name] && Memory.creeps[name].roomname == roomname && Memory.creeps[name].spawn != '') {
                 roleRespawn.check(name, targets, targetsinvtow, spawn[0].name);
             }
         }
         
         for (let name in Game.creeps) {
             let creep = Game.creeps[name];
-            if (creep.memory.spawn == roomname){
+            if (creep.memory.roomname == roomname){
                 roleDowork.tell(creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn);
             }
         }
