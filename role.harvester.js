@@ -11,14 +11,14 @@ let roleHarvester = {
                 if (creep.pickup(clost) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(clost);
                 }
+            } else if (storage != '' && (spawneng != '' || towereng != '')) {
+                if (creep.withdraw(storage[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(storage[0]);
+                }
             } else if (resources != '') {
                 let clost = creep.pos.findClosestByRange(resources);
                 if (creep.pickup(clost) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(clost);
-                }
-            } else if (storage != '') {
-                if (creep.withdraw(storage[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(storage[0]);
                 }
             }
         } else {

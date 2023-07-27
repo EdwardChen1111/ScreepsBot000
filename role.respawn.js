@@ -8,7 +8,7 @@ let roleRespawn = {
             let hroom = Memory.creeps[name].hroom;
             let out = Memory.creeps[name].out;
             let spawn = Memory.creeps[name].spawn;
-            let storageId = Memory.creeps[name].storageID;
+            let room = Memory.creeps[name].spawn;
             let dospawn = false;
             
             if (type == 'worker') {
@@ -24,7 +24,7 @@ let roleRespawn = {
                     dospawn = true;
                 } else if (type == 'outbuilder') {
                     dospawn = true;
-                } else if (type == 'claimer' && (Game.getObjectById(sourceId).reservation == undefined || Game.getObjectById(sourceId).reservation.ticksToEnd < 4600)) {
+                } else if (type == 'claimer' && (Game.getObjectById(sourceId) == null || Game.getObjectById(sourceId).reservation == undefined || Game.getObjectById(sourceId).reservation.ticksToEnd < 4600)) {
                     dospawn = true;
                 }
             } else {
@@ -42,7 +42,7 @@ let roleRespawn = {
             } 
             
             if (dospawn) {
-                if (Game.spawns[spawnname].spawnCreep( body, name, { memory: { role: type, sourceID: sourceId, troom: troom, hroom: hroom, out: out, spawn: spawn, storageID: storageId, body: body}}) == 0){
+                if (Game.spawns[spawnname].spawnCreep( body, name, { memory: { role: type, sourceID: sourceId, troom: troom, hroom: hroom, out: out, spawn: spawn, roomname: room, body: body}}) == 0){
                     console.log('Respawning non-existing creep memory:', name);
                 }
             }

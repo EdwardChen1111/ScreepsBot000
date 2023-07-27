@@ -3,13 +3,10 @@ let username = 'EdwardChen1111';
 
 module.exports.loop = function () {
     for (let name in Game.rooms) {
-        if (Game.rooms[name].controller != undefined){
-            owner = Game.rooms[name].controller.owner;
-            if (owner != undefined) {
-                if (owner.username == username) {
-                    roleRooms.run(name, username);
-                }    
-            }
+        let controller = Game.rooms[name].controller;
+        let room = Game.rooms[name];
+        if (controller != undefined && controller.owner != undefined && controller.owner.username == username){
+            roleRooms.run(room, name, username);
         }
     }
 }

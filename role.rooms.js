@@ -4,24 +4,24 @@ let roleDowork = require('role.dowork');
 let roleTower = require('role.tower');
 
 let roleRoom = {
-    run: function (roomname, username) {
-        let spawn = '', alltower = '', storage = '', bui = '', spawneng = '', towereng = '', targets = '', targetsinvtow = '';
-        let controllertime = Game.rooms[roomname].controller.ticksToDowngrade;
-        let resources = Game.rooms[roomname].find(FIND_DROPPED_RESOURCES);
+    run: function (room, roomname, username) {
+        let spawn = '', alltower = '', storage = '', bui = '', spawneng = '', towereng = '', targets = [], targetsinvtow = [];
+        let controllertime = room.controller.ticksToDowngrade;
+        let resources = room.find(FIND_DROPPED_RESOURCES);
+        spawn = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_SPAWN)}});
         let bigresources = resources.filter(function (object) {
             return object.amount > 500;
         });
-        spawn = Game.rooms[roomname].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_SPAWN)}});
         
         if (spawn != '') {
             if (spawn[0].memory.uptime == undefined || spawn[0].memory.uptime == 0) {
                 spawn[0].memory.uptime = 20;
-                storage = Game.rooms[roomname].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_CONTAINER)}});
-                alltower = Game.rooms[roomname].find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER});
-                spawns = Game.rooms[roomname].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN)}});
+                storage = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_CONTAINER)}});
+                alltower = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER});
+                spawns = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN)}});
             
                 if (controllertime > 5000) {
-                    bui = Game.rooms[roomname].find(FIND_CONSTRUCTION_SITES);
+                    bui = room.find(FIND_CONSTRUCTION_SITES);
                 }
             
                 spawn[0].memory.storage = storage.map(storage => storage.id);
@@ -30,6 +30,7 @@ let roleRoom = {
                 spawn[0].memory.spawnengid = spawns.map(spawns => spawns.id);
             } else if (spawn[0].memory.uptime > 0){
                 spawn[0].memory.uptime--;
+                
                 if (spawn[0].memory.bui != '') {
                     bui = spawn[0].memory.bui.map(id => Game.getObjectById(id));
                 }
@@ -45,8 +46,8 @@ let roleRoom = {
                 });
             }
         } else {
-            spawns = Game.rooms[roomname].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN)}});
-            bui = Game.rooms[roomname].find(FIND_CONSTRUCTION_SITES);
+            spawns = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN)}});
+            bui = room.find(FIND_CONSTRUCTION_SITES);
         }
         
         if (storage != '' && storage.length > 1) {
@@ -68,11 +69,11 @@ let roleRoom = {
         }
         
         if (spawn != '') {
-            for (let name in spawn[0].memory.appendrange) {
-                if (spawn[0].memory.appendrange[name].reservation != undefined || spawn[0].memory.appendrange[name].owner != undefined) {
-                    let room = spawn[0].memory.appendrange[name];
-                    targets = targets.concat(Game.rooms[room].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'Chenwu')}}));
-                    targetsinvtow = targetsinvtow.concat(Game.rooms[room].find(FIND_HOSTILE_STRUCTURES, {filter: (object) => {return (object.owner.username == 'Invader')}}));
+            for (let num in spawn[0].memory.appendrange) {
+                let appendroom = Game.rooms[spawn[0].memory.appendrange[num]];
+                if (appendroom.controller != undefined && (appendroom.controller.reservation != undefined || appendroom.controller.owner != undefined)) {
+                    targets.push(...appendroom.find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'Chenwu')}}));
+                    targetsinvtow.push(...appendroom.find(FIND_HOSTILE_STRUCTURES, {filter: (object) => {return (object.owner.username == 'Invader')}}));
                 }
             }
         }
