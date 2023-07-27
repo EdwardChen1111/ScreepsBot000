@@ -17,19 +17,18 @@ let roleHarvester = {
                 }
             }
         } else {
+            let target = '';
+
             if (spawneng != '') {
-                let clost = creep.pos.findClosestByRange(spawneng);
-                if (creep.transfer(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
-                }
+                target = creep.pos.findClosestByRange(spawneng);
             } else if (towereng != '') {
-                if (creep.transfer(towereng[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(towereng[0], {visualizePathStyle: {stroke: '#ffffff'}});
-                }
+                target = creep.pos.findClosestByRange(towereng);
             } else if (storage != '' && resources != '') {
-                if (creep.transfer(storage[storage.length - 1], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(storage[storage.length - 1], {visualizePathStyle: {stroke: '#ffffff'}});
-                }
+                target = storage[storage.length - 1];
+            }
+            
+            if (target != '' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
             }
         }
 	}
