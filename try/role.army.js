@@ -15,7 +15,6 @@ let roleArmy = {
             creep.moveTo(targets[0]);
             if (creep.pos.getRangeTo(targets[0]) <= 3) {
                 creep.rangedAttack(targets[0]);
-                creep.rangedMassAttack();
                 creep.attack(targets[0]);
             }
         } else {
