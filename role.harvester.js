@@ -1,10 +1,5 @@
 let roleHarvester = {
     run: function (creep, resources, bigresources, spawneng, towereng, storage) {
-        if (creep.memory.hroom != creep.room.name) {
-            const exitDir = creep.room.findExitTo(creep.memory.hroom);
-            const exit = creep.pos.findClosestByRange(exitDir);
-            creep.moveTo(exit);
-        }
         if (creep.store.getFreeCapacity() == creep.store.getCapacity() || (spawneng == '' && towereng == '' && resources != '' && creep.store.getFreeCapacity() > 0)) {
             if (bigresources != '') {
                 let clost = creep.pos.findClosestByRange(bigresources);
