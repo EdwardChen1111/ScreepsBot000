@@ -16,7 +16,7 @@ let roleDoWork = {
         if (creep.memory.role == 'worker') {
             roleWorker.run(creep);
         } else if (creep.memory.role == 'builder') {
-            roleBuilder.run(creep, resources, bui, storage);
+            roleBuilder.run(creep, bui, controllertime, storage);
         } else if (creep.memory.role == 'harvester') {
             roleHarvester.run(creep, resources, bigresources, spawneng, towereng, storage);
         } else if (creep.memory.role == 'carrier') {

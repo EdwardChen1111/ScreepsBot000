@@ -1,5 +1,5 @@
 let roleBuilder = {
-    run: function (creep, storage, bui, storage) {
+    run: function (creep, bui, controllertime, storage) {
         let target = '';
         controller = creep.room.controller;
         
@@ -7,7 +7,7 @@ let roleBuilder = {
             target = storage[0];
         } else if (bui != '' && creep.build(bui[0]) == ERR_NOT_IN_RANGE) {
             target = bui[0];
-        } else if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+        } else if (bui == '' && creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
             target = controller;
         }
         
