@@ -1,12 +1,12 @@
 let roleRespawn = {
-    check: function (name, targets, targetsinvtow, spawnname) {
+    check: function (name, targets, targetsinvtow) {
         let type = Memory.creeps[name].role;
         let body = Memory.creeps[name].body;
         let sourceId = Memory.creeps[name].sourceID;
         let troom = Memory.creeps[name].troom;
         let hroom = Memory.creeps[name].hroom;
         let out = Memory.creeps[name].out;
-        let spawn = spawnname;
+        let spawn = Memory.creeps[name].spawn;
         let room = Memory.creeps[name].roomname;
         let dospawn = false;
         let waring = ['worker', 'harvester'];
@@ -33,7 +33,7 @@ let roleRespawn = {
         } 
             
         if (dospawn) {
-            if (Game.spawns[spawnname].spawnCreep( body, name, { memory: { role: type, sourceID: sourceId, troom: troom, hroom: hroom, out: out, spawn: spawn, roomname: room, body: body}}) == 0){
+            if (Game.spawns[spawn].spawnCreep( body, name, { memory: { role: type, sourceID: sourceId, troom: troom, hroom: hroom, out: out, spawn: spawn, roomname: room, body: body}}) == 0){
                 console.log('Respawning non-existing creep memory:', name);
             }
         }

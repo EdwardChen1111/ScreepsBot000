@@ -64,10 +64,6 @@ let roleRoom = {
             });
         }
         
-        for (let spawnname in spawn) {
-            roleSpawningtxt.show(spawn[spawnname].name);
-        }
-        
         if (spawn != '') {
             for (let num in spawn[0].memory.appendrange) {
                 let appendroom = Game.rooms[spawn[0].memory.appendrange[num]];
@@ -84,8 +80,12 @@ let roleRoom = {
         
         for (let name in Memory.creeps) {
             if (!Game.creeps[name] && Memory.creeps[name].roomname == roomname && Memory.creeps[name].spawn != '') {
-                roleRespawn.check(name, targets, targetsinvtow, spawn[0].name);
+                roleRespawn.check(name, targets, targetsinvtow);
             }
+        }
+
+        for (let spawnname in spawn) {
+            roleSpawningtxt.show(spawn[spawnname].name);
         }
         
         for (let name in Game.creeps) {
