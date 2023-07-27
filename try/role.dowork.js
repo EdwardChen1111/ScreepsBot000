@@ -14,6 +14,9 @@ var roleMiner = require('role.miner');
 var roleOutB = require('out B');
 var roleOutH = require('out H');
 var roleOutG = require('out G');
+var roleOutC = require('out C');
+var roleOutAll = require('out All');
+
 
 var roleDoWork = {
     tell: function(creep) {
@@ -63,7 +66,13 @@ var roleDoWork = {
         }
         if(creep.memory.role == 'outG') {
             roleOutG.run(creep);
-        }  
+        }
+        if(creep.memory.role == 'outC') {
+            roleOutC.run(creep);
+        }
+        if(creep.memory.role == 'outAll') {
+            roleOutAll.run(creep);
+        }
 	}
 };
 module.exports = roleDoWork; 
