@@ -21,7 +21,7 @@ let roleRespawn = {
                 dospawn = true;
             }
         } else if (targets != '' && type == 'army'){
-                dospawn = true;
+            dospawn = true;
         }
             
         if (targetsinvtow != '') {
