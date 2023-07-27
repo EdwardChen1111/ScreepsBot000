@@ -1,28 +1,26 @@
-let roleLumberjack = {
+let roleSoldier = {
     run: function (creep) {
-        var flag = Game.flags['Attack'];
-        if (flag){
-            const look = flag.room.lookAt(flag.pos.x, flag.pos.y);
-            look.forEach(function(lookObject) {
-                if(lookObject.type == LOOK_STRUCTURES) {
-                    if(creep.attack(lookObject.structure) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(lookObject.structure);
-                    }
+        if (creep.memory.hroom == creep.room.name){
+            let targets = [];
+            targets.push(...Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'EdwardChen1111')}}));
+            targets.push(...Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_STRUCTURES, {filter: (creep) => {return (creep.owner.username != 'EdwardChen1111')}}));
+            if (targets != '') {
+                let clost = creep.pos.findClosestByRange(targets);
+                creep.moveTo(clost);
+                if (creep.pos.getRangeTo(clost) <= 3) {
+                    creep.rangedAttack(clost);
+                    creep.rangedMassAttack();
+                    creep.attack(clost);
                 }
-            });
-        }
-        /*
-        if (flag){
-            let target = flag.room.find(FIND_HOSTILE_STRUCTURES);
-            if(creep.attack(target) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(target);
+            } else {
+                let way = new RoomPosition(24, 24, creep.memory.hroom);
+                creep.moveTo(way);
             }
+        } else {
+            const exitDir = creep.room.findExitTo(creep.memory.hroom);
+            const exit = creep.pos.findClosestByRange(exitDir);
+            creep.moveTo(exit);
         }
-        */
-        else{
-            let way = new RoomPosition(24, 27, creep.memory.hroom);
-            creep.moveTo(way);
-        } 
 	}
 };
-module.exports = roleLumberjack;
+module.exports = roleSoldier;
