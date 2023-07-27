@@ -11,7 +11,7 @@ let roleHarvester = {
         let link = Game.getObjectById(creep.memory.linkID)
         let terminal = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TERMINAL)}});
         let container = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_CONTAINER) && structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;}});
-
+        
         if(creep.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0){
             const clost = creep.pos.findClosestByRange(terminal);
             if(creep.transfer(clost, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
@@ -77,7 +77,7 @@ let roleHarvester = {
             else {
                 if (storage.length > 0) {
                     const clost = creep.pos.findClosestByRange(storage);
-                    for(const resourceType in creep.carry) {
+                    for(const resourceType in creep.store) {
                         if (creep.transfer(clost, resourceType) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
                         }
