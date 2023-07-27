@@ -10,33 +10,37 @@ let roleUniversal = require('role.universal');
 let roleClaimer = require('role.claimer');
 let roleSoldier = require('role.soldier');
 let roleHealer = require('role.healer');
+let roleMiner = require('role.miner');
 
 let roleDoWork = {
-    tell: function (creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn) {
-        if (creep.memory.role == 'worker') {
+    tell: function (creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn, terminal) {
+        role = creep.memory.role;
+        if (role == 'worker') {
             roleWorker.run(creep);
-        } else if (creep.memory.role == 'builder') {
+        } else if (role == 'builder') {
             roleBuilder.run(creep, bui, controllertime, storage);
-        } else if (creep.memory.role == 'harvester') {
+        } else if (role == 'harvester') {
             roleHarvester.run(creep, resources, bigresources, spawneng, towereng, storage);
-        } else if (creep.memory.role == 'carrier') {
+        } else if (role == 'carrier') {
             roleCarrier.run(creep, storage);
-        } else if (creep.memory.role == 'outworker') {
+        } else if (role == 'outworker') {
             roleOutworker.run(creep);
-        } else if (creep.memory.role == 'outbuilder') {
+        } else if (role == 'outbuilder') {
             roleOutbuilder.run(creep);
-        } else if (creep.memory.role == 'outclaimer') {
+        } else if (role == 'outclaimer') {
             roleOutclaimer.run(creep);
-        } else if (creep.memory.role == 'army') {
+        } else if (role == 'army') {
             roleArmy.run(creep, targets);
-        } else if (creep.memory.role == 'universal') {
+        } else if (role == 'universal') {
             roleUniversal.run(creep, storage, spawneng, towereng, spawn, bui);
-        } else if (creep.memory.role == 'claimer') {
+        } else if (role == 'claimer') {
             roleClaimer.run(creep, storage, spawneng, towereng);
-        } else if (creep.memory.role == 'soldier') {
+        } else if (role == 'soldier') {
             roleSoldier.run(creep);
-        } else if (creep.memory.role == 'healer') {
+        } else if (role == 'healer') {
             roleHealer.run(creep);
+        } else if (role == 'miner') {
+            roleMiner.run(creep, terminal);
         }
 	}
 };

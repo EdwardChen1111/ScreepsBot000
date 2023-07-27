@@ -5,7 +5,7 @@ let roleTower = require('role.tower');
 
 let roleRoom = {
     run: function (room, roomname, username) {
-        let spawn = '', alltower = '', storage = '', bui = '', spawneng = '', towereng = '', targets = [], targetsinvtow = [];
+        let spawn = '', alltower = '', storage = '', terminal = '', bui = '', spawneng = '', towereng = '', targets = [], targetsinvtow = [];
         let controllertime = room.controller.ticksToDowngrade;
         let resources = room.find(FIND_DROPPED_RESOURCES);
         spawn = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_SPAWN)}});
@@ -19,7 +19,8 @@ let roleRoom = {
                 storage = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_CONTAINER)}});
                 alltower = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER});
                 spawns = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN)}});
-            
+                terminal = room.terminal;
+
                 if (controllertime > 5000) {
                     bui = room.find(FIND_CONSTRUCTION_SITES);
                 }
@@ -28,6 +29,9 @@ let roleRoom = {
                 spawn[0].memory.alltower = alltower.map(alltower => alltower.id);
                 spawn[0].memory.bui = bui.map(bui => bui.id);
                 spawn[0].memory.spawnengid = spawns.map(spawns => spawns.id);
+                if (terminal != undefined) {
+                    spawn[0].memory.terminal = room.terminal.id;
+                }
             } else if (spawn[0].memory.uptime > 0){
                 spawn[0].memory.uptime--;
                 
@@ -39,6 +43,9 @@ let roleRoom = {
                 }
                 if (spawn[0].memory.alltower != '') {
                     alltower = spawn[0].memory.alltower.map(id => Game.getObjectById(id));
+                }
+                if (spawn[0].memory.terminal != '') {
+                    terminal = Game.getObjectById(spawn[0].memory.terminal);
                 }
                 
                 spawneng = spawn[0].memory.spawnengid.map(id => Game.getObjectById(id)).filter(function (structure) {
@@ -91,7 +98,7 @@ let roleRoom = {
         for (let name in Game.creeps) {
             let creep = Game.creeps[name];
             if (creep.memory.roomname == roomname){
-                roleDowork.tell(creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn);
+                roleDowork.tell(creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn, terminal);
             }
         }
         

@@ -10,7 +10,7 @@ let roleRespawn = {
         let room = Memory.creeps[name].roomname;
         let dospawn = false;
         let waring = ['worker', 'harvester'];
-        let normal = ['builder', 'outworker', 'carrier', 'outbuilder', 'claimer'];
+        let normal = ['builder', 'outworker', 'carrier', 'outbuilder', 'claimer', 'miner'];
             
         if (waring.indexOf(type) != -1) {
             dospawn = true;
