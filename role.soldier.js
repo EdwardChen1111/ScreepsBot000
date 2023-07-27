@@ -2,8 +2,8 @@ let roleSoldier = {
     run: function (creep) {
         if (creep.memory.hroom == creep.room.name){
             let targets = [];
-            targets = targets.concat(Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'Chenwu')}}));
-            targets = targets.concat(Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_STRUCTURES, {filter: (creep) => {return (creep.owner.username != 'Chenwu')}}));
+            targets.push(...Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'Chenwu')}}));
+            targets.puch(...Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_STRUCTURES, {filter: (creep) => {return (creep.owner.username != 'Chenwu')}}));
             if (targets != '') {
                 let clost = creep.pos.findClosestByRange(targets);
                 creep.moveTo(clost);
