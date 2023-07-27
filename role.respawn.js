@@ -9,21 +9,15 @@ let roleRespawn = {
         let spawn = Memory.creeps[name].spawn;
         let room = Memory.creeps[name].spawn;
         let dospawn = false;
+        let waring = ['worker', 'harvester'];
+        let normal = ['builder', 'outworker', 'carrier', 'outbuilder', 'claimer'];
             
-        if (type == 'worker') {
+        if (waring.indexOf(type) != -1) {
             dospawn = true;
-        } else if (type == 'harvester') {
-            dospawn = true;
-        } else if (targets == '') {
-            if (type == 'builder') {
+        } else if (targets == '' && normal.indexOf(type) != -1) {
+            if (type != 'claimer') {
                 dospawn = true;
-            } else if (type == 'outworker') {
-                dospawn = true;
-            } else if (type == 'carrier') {
-                dospawn = true;
-            } else if (type == 'outbuilder') {
-                dospawn = true;
-            } else if (type == 'claimer' && (Game.getObjectById(sourceId) == null || Game.getObjectById(sourceId).reservation == undefined || Game.getObjectById(sourceId).reservation.ticksToEnd < 4600)) {
+            } else if (Game.getObjectById(sourceId) == null || Game.getObjectById(sourceId).reservation == undefined || Game.getObjectById(sourceId).reservation.ticksToEnd < 4000) {
                 dospawn = true;
             }
         } else {
