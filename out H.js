@@ -1,16 +1,16 @@
 let roleHarvester = {
     run: function (creep) {
         
-        let sources = creep.room.find(FIND_DROPPED_RESOURCES);
-        var resources = creep.room.find(FIND_SOURCES);
+        let resources = creep.room.find(FIND_DROPPED_RESOURCES, {filter: (resources) => {return (resources.amount > 500) || resources.resourceType != RESOURCE_ENERGY }});
+        var sources = creep.room.find(FIND_SOURCES);
         let tower = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TOWER) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 200}});
         let spawn = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0}});
         let storage = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
                                                                                                                                                                                                                               
         if (creep.store.getFreeCapacity() == creep.store.getCapacity() || (spawn == '' && tower == '' && creep.store.getFreeCapacity() > 0)) {
-            if(sources != ''){
-                const clost = creep.pos.findClosestByRange(sources);
-                if (creep.pickup(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            if(resources != ''){
+                const clost = creep.pos.findClosestByRange(resources);
+                if (creep.pickup(clost) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(clost);
                 }
             }
@@ -21,11 +21,12 @@ let roleHarvester = {
                 }
             }
             else{
-                const clost = creep.pos.findClosestByRange(resources);
+                const clost = creep.pos.findClosestByRange(sources);
                 if (creep.harvest(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(clost);
                 }
             }
+            
         }                                   
         else{
             if(spawn != ''){
@@ -42,7 +43,7 @@ let roleHarvester = {
             }
             else if(storage != ''){
                 const clost = creep.pos.findClosestByRange(storage);
-                for(const resourceType in creep.carry) {
+                for(const resourceType in creep.store) {
                     if (creep.transfer(clost, resourceType) == ERR_NOT_IN_RANGE) {
                         creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
                     }
