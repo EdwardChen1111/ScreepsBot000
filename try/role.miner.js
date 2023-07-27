@@ -5,8 +5,8 @@ var roleMiner = {
         let labL = Game.getObjectById('64b7ff057df01f2e2950d398')
         let sources = creep.room.find(FIND_MINERALS);
         let container = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_CONTAINER) && structure.store.getFreeCapacity(RESOURCE_LEMERGIUM) > 0}});
-        let terminal = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TERMINAL)}});
-        let storage = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
+        let terminal = creep.pos.findClosestByRange(Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TERMINAL)}}));
+        let storage = creep.pos.findClosestByRange(Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}}));
         
         if (creep.memory.building && creep.store.getUsedCapacity() == 0) {
             creep.memory.building = false;
@@ -23,9 +23,8 @@ var roleMiner = {
                 }
             }
             else if(terminal.store.getUsedCapacity(RESOURCE_LEMERGIUM) < 10000){
-                let clost = creep.pos.findClosestByRange(terminal);
-                if(creep.transfer(clost, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffaa00'}});
+                if(creep.transfer(terminal, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(terminal, {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }
             else if(container.length > 0){
@@ -35,17 +34,15 @@ var roleMiner = {
                 }
             }
             else{
-                let clost = creep.pos.findClosestByRange(storage);
-                if(creep.transfer(clost, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffaa00'}});
+                if(creep.transfer(storage, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(storage, {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }
 	    } else {
             let container = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_CONTAINER) && structure.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0;}});
             if(storage.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0){
-                let clost = creep.pos.findClosestByRange(storage);
-                if(creep.withdraw(clost, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffaa00'}});
+                if(creep.withdraw(storage, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(storage, {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }
             else if(container.length > 0){
