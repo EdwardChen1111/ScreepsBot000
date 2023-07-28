@@ -1,26 +1,21 @@
-let roleSoldier = {
-    run: function (creep) {
-        if (creep.memory.hroom == creep.room.name){
-            let targets = [];
-            targets.push(...Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'EdwardChen1111')}}));
-            targets.push(...Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_STRUCTURES, {filter: (creep) => {return (creep.owner.username != 'EdwardChen1111')}}));
-            if (targets != '') {
-                let clost = creep.pos.findClosestByRange(targets);
-                creep.moveTo(clost);
-                if (creep.pos.getRangeTo(clost) <= 3) {
-                    creep.rangedAttack(clost);
-                    creep.rangedMassAttack();
-                    creep.attack(clost);
-                }
-            } else {
-                let way = new RoomPosition(19, 12, creep.memory.hroom);
-                creep.moveTo(way);
-            }
-        } else {
-            const exitDir = creep.room.findExitTo(creep.memory.hroom);
-            const exit = creep.pos.findClosestByRange(exitDir);
-            creep.moveTo(exit);
+let roleTower = {
+    work: function(tower) {
+        let fight = tower.room.find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'EdwardChen1111')}});
+        let fix = tower.room.find(FIND_STRUCTURES, {filter: (structure) => {return 
+        (structure.structureType != STRUCTURE_WALL)
+//      && (structure.structureType != STRUCTURE_RAMPART) 
+        && structure.hits < 250000 && structure.hits < structure.hitsMax}});
+        let doct = tower.room.find(FIND_MY_CREEPS, {filter: object => object.hits < object.hitsMax});
+        if (fight.length > 0) {                                                                                                                                       
+            fight.sort((a,b) => a.hits - b.hits);
+            tower.attack(fight[fight.length - 1]);
+        } else if(doct.length > 0) {
+            doct.sort((a,b) => a.hits - b.hits);
+            tower.heal(doct[doct.length - 1]);
+        } else if(fix.length > 0) {
+            fix.sort((a,b) => a.hits - b.hits);
+            tower.repair(fix[0]);
         }
 	}
 };
-module.exports = roleSoldier;
+module.exports = roleTower;
