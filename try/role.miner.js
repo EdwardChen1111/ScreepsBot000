@@ -40,12 +40,12 @@ var roleMiner = {
             }
 	    } else {
             let container = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_CONTAINER) && structure.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0;}});
-            if(storage.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0){
+            if(storage.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0 && terminal.store.getUsedCapacity(RESOURCE_LEMERGIUM) < 10000){
                 if(creep.withdraw(storage, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(storage, {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }
-            else if(container.length > 0){
+            else if(container.length > 0 && terminal.store.getUsedCapacity(RESOURCE_LEMERGIUM) < 10000){
                 let clost = creep.pos.findClosestByRange(container);
                 if(creep.withdraw(clost, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffaa00'}});
