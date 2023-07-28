@@ -10,7 +10,7 @@ let roleHarvester = {
         let storage = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
         let lab = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_LAB) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0}});
         let link = Game.getObjectById(creep.memory.linkID)
-        let terminal = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TERMINAL)}});
+        let terminal = creep.pos.findClosestByRange(Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TERMINAL)}}));
         let container = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_CONTAINER) && structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;}});
         
         if(creep.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0){
@@ -23,6 +23,12 @@ let roleHarvester = {
             if(link.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
                 if (creep.withdraw(link , RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(link);
+                }
+            }
+            else if (rareresources != '') {
+                const clost = creep.pos.findClosestByRange(rareresources);
+                if (creep.pickup(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(clost);
                 }
             }
             else if (container != '') {
@@ -44,7 +50,6 @@ let roleHarvester = {
             }
         }
         else {
-            let terminalelse = creep.pos.findClosestByRange(terminal);
             if (extension != '' && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 50) {
                 const clost = creep.pos.findClosestByRange(extension);
                 if (creep.transfer(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
@@ -63,10 +68,9 @@ let roleHarvester = {
                     creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }
-            else if (terminal != '' && terminalelse.store.getUsedCapacity(RESOURCE_ENERGY) < 10000) {
-                const clost = creep.pos.findClosestByRange(terminal);
-                if (creep.transfer(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
+            else if (terminal != '' && terminal.store.getUsedCapacity(RESOURCE_ENERGY) < 10000) {
+                if (creep.transfer(terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(terminal, {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             } 
             else if (lab != '' && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 100) {
