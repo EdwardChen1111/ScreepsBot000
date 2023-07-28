@@ -14,9 +14,8 @@ let roleHarvester = {
         let container = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_CONTAINER) && structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;}});
         
         if(creep.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0){
-            const clost = creep.pos.findClosestByRange(terminal);
-            if(creep.transfer(clost, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffaa00'}});
+            if(creep.transfer(terminal, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(terminal, {visualizePathStyle: {stroke: '#ffaa00'}});
             }
         }
         else if (creep.store.getFreeCapacity() == creep.store.getCapacity() || (extension == '' && spawn == '' && tower == '' && resources != '' && creep.store.getFreeCapacity() > 0)) {
@@ -68,7 +67,7 @@ let roleHarvester = {
                     creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }
-            else if (terminal != '' && terminal.store.getUsedCapacity(RESOURCE_ENERGY) < 10000) {
+            else if (terminal != '' && terminal.store.getUsedCapacity(RESOURCE_ENERGY) < 10000 && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
                 if (creep.transfer(terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(terminal, {visualizePathStyle: {stroke: '#ffffff'}});
                 }
