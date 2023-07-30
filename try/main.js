@@ -15,10 +15,12 @@ module.exports.loop = function () {
             let tower = Game.rooms[name].find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER})[num];
             roleTower.work(tower);
         }
+        
         for (let num in Game.rooms[name].find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_LINK})) {
             let link = Game.rooms[name].find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_LINK})[num];
             roleLink.work(link);
         }
+        
     }
     
     for(var name in Game.creeps) {
