@@ -8,7 +8,8 @@ let roleHarvester = {
         let extension = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0}});
         let spawn = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_SPAWN) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0}});
         let storage = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
-                                                                                                                                                                                                                              
+        let link = Game.getObjectById(creep.memory.linkID);
+
         if (creep.store.getFreeCapacity() == creep.store.getCapacity() || (spawn == '' && tower == '' && creep.store.getFreeCapacity() > 0)) {
             if (rareresources != '') {
                 const clost = creep.pos.findClosestByRange(rareresources);
@@ -48,8 +49,13 @@ let roleHarvester = {
                 if (creep.transfer(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
                 }
-            } 
-            else if (tower != '' && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 300) {
+            }
+            else if (link.store.getFreeCapacity(RESOURCE_ENERGY) > 300) {
+                if (creep.transfer(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(link, {visualizePathStyle: {stroke: '#ffffff'}});
+                }
+            }
+            else if (tower != '' && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 200) {
                 const clost = creep.pos.findClosestByRange(tower);
                 if (creep.transfer(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
