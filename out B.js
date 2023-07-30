@@ -3,6 +3,7 @@ var roleBuilder = {
 
         let needbuild = creep.pos.findClosestByRange(creep.room.find(FIND_CONSTRUCTION_SITES));
         let storage = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
+        let link = Game.getObjectById(creep.memory.linkID);
         
 	    if (creep.memory.building && creep.store.getUsedCapacity() == 0) {
             creep.memory.building = false;
@@ -25,11 +26,18 @@ var roleBuilder = {
 	        }
 	    } 
 	    else{
-	        if(storage != '') {
+	        if(needbuild && storage != ''){
                 if (creep.withdraw(storage[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(storage[0]);
                 }
-            }
+	        }
+	        else{
+	            if(link.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
+                    if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(link);
+                    }
+	            }
+	        }
         }
 	}
 };
