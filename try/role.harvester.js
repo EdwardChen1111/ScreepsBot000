@@ -67,7 +67,7 @@ let roleHarvester = {
                     creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }
-            else if (terminal != '' && terminal.store.getUsedCapacity(RESOURCE_ENERGY) < 10000 && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
+            else if (terminal != '' && terminal.store.getUsedCapacity(RESOURCE_ENERGY) < 20000 && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
                 if (creep.transfer(terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(terminal, {visualizePathStyle: {stroke: '#ffffff'}});
                 }
