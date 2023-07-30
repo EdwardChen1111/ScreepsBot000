@@ -17,14 +17,14 @@ var roleMiner = {
 	        creep.say('🚧 build');
 	    }
 	    if (creep.memory.building) {
-	        if(labL.store.getFreeCapacity(RESOURCE_LEMERGIUM) > 0){
-	            if(creep.transfer(labL, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(labL, {visualizePathStyle: {stroke: '#ffaa00'}});
-                }
-            }
-            else if(terminal.store.getUsedCapacity(RESOURCE_LEMERGIUM) < 10000){
+	        if(terminal.store.getUsedCapacity(RESOURCE_LEMERGIUM) < 10000){
                 if(creep.transfer(terminal, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(terminal, {visualizePathStyle: {stroke: '#ffaa00'}});
+                }
+            }
+	        else if(labL.store.getFreeCapacity(RESOURCE_LEMERGIUM) > 0 ){
+	            if(creep.transfer(labL, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(labL, {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }
             else if(container.length > 0){
@@ -40,7 +40,12 @@ var roleMiner = {
             }
 	    } else {
             let container = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_CONTAINER) && structure.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0;}});
-            if(storage.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0 && terminal.store.getUsedCapacity(RESOURCE_LEMERGIUM) < 10000){
+            if(labL.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0 && terminal.store.getUsedCapacity(RESOURCE_LEMERGIUM) < 10000){
+                if(creep.withdraw(labL, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(labL, {visualizePathStyle: {stroke: '#ffaa00'}});
+                }
+            }
+            else if(storage.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0 && terminal.store.getUsedCapacity(RESOURCE_LEMERGIUM) < 10000){
                 if(creep.withdraw(storage, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(storage, {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
