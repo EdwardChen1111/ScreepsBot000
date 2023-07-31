@@ -1,24 +1,41 @@
 let roleCarrier = {
     run: function (creep, storage) {
-        if (creep.room.name == creep.memory.troom && creep.store.getFreeCapacity() > 0) {
-            let dropresources = creep.room.find(FIND_DROPPED_RESOURCES);
-            if (dropresources != '') {
-                dropresources.sort((a,b) => b.amount - a.amount);
-                if (creep.pickup(dropresources[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(dropresources[0]);
-                }
+        let freeC = creep.store.getFreeCapacity();
+        if (creep.memory.moving == '') {
+            creep.memory.moving = false;
+            creep.memory.doing = '';
+            creep.memory.target = '';
+        }
+
+        if (creep.memory.moving) {
+            let doing = creep.memory.doing;
+            let target = Game.getgetObjectById(creep.memory.target);
+            if ((doing == 'p' && creep.pickup(target) == OK) || (doing == 't' && creep.transfer(target) == OK) || (doing == 's' && creep.pos.inRangeTo(target, 10))) {
+                creep.memory.moving = false;
             } else {
-                let way = new RoomPosition(24, 24, creep.memory.troom);
-                creep.moveTo(way);
-            }
-        } else if (storage != '' && creep.store.getFreeCapacity() == 0){
-            if (creep.transfer(storage[storage.length - 1], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(storage[storage.length - 1], {visualizePathStyle: {stroke: '#ffffff'}});
+                creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
             }
         } else {
-            const exitDir = creep.room.findExitTo(creep.memory.troom);
-            const exit = creep.pos.findClosestByRange(exitDir);
-            creep.moveTo(exit);
+            if (freeC > 0) {
+                let dropresources = '';
+                if (creep.room.name == creep.memory.troom) {
+                    dropresources = creep.room.find(FIND_DROPPED_RESOURCES);
+                }
+
+                if (dropresources != '') {
+                    creep.memory.target = dropresources.sort((a,b) => b.amount - a.amount)[0].id;
+                    creep.memory.doing = 'p';
+                } else {
+                    creep.memory.target = creep.memory.standby;
+                    creep.memory.doing = 's';
+                }
+
+                creep.memory.moving = true;
+            } else if (storage != '') {
+                creep.memory.target = storage[storage.length - 1];
+                creep.memory.doing = 't';
+                creep.memory.moving = true;
+            }
         }
 	}
 };
