@@ -1,6 +1,6 @@
 let roleRespawn = {
     check: function (name, targets, targetsinvtow) {
-        let memory = Memory.creeps[name]
+        let memory = Memory.creeps[name];
         let type = memory.role;
         let body = memory.body;
         let sourceId = memory.sourceID;
