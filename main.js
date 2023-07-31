@@ -9,4 +9,8 @@ module.exports.loop = function () {
             roleRooms.run(room, name, username);
         }
     }
+
+    if (Game.cpu.getUsed() > 20) {
+        Game.notify(`This tick use ${Game.cpu.getUsed()}CPU, CPU Bucket remain ${Game.cpu.bucket}`)
+    }
 }
