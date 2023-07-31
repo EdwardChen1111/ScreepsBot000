@@ -11,7 +11,7 @@ let roleHarvester = {
             let doing = creep.memory.doing;
             let target = Game.getObjectById(creep.memory.target);
 
-            if ((doing == 'p' && creep.pickup(target) == OK) || (doing == 'w' && creep.withdraw(target) == OK) || (doing == 't' && creep.transfer(target) == OK)) {
+            if (target == '' || (doing == 'p' && creep.pickup(target) == OK) || (doing == 'w' && creep.withdraw(target) == OK) || (doing == 't' && creep.transfer(target) == OK)) {
                 creep.memory.moving = false;
             } else {
                 creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});

@@ -18,7 +18,7 @@ let roleCarrier = {
                 target = Game.getObjectById(creep.memory.target);
             }
             
-            if ((doing == 'p' && creep.pickup(target) == OK) || (doing == 't' && creep.transfer(target) == OK) || (doing == 's' && creep.pos.inRangeTo(target, 10))) {
+            if (target == '' || (doing == 'p' && creep.pickup(target) == OK) || (doing == 't' && creep.transfer(target) == OK) || (doing == 's' && creep.pos.inRangeTo(target, 10))) {
                 creep.memory.moving = false;
             } else {
                 creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
