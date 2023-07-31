@@ -11,7 +11,7 @@ let roleHarvester = {
             let doing = creep.memory.doing;
             let target = Game.getObjectById(creep.memory.target);
 
-            if (target != '' || (doing == 'p' && creep.pickup(target) == ERR_NOT_IN_RANGE) || (doing == 'w' && creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)) {
+            if (target != '' && (doing == 'p' && creep.pickup(target) == ERR_NOT_IN_RANGE) || (doing == 'w' && creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)) {
                 creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
             } else {
                 creep.memory.moving = false;
