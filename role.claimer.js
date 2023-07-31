@@ -6,7 +6,8 @@ let roleClaimer = {
                 creep.moveTo(controller);
             }
         } else {
-            creep.moveTo(creep.memory.standby);
+            let standby = new RoomPosition(standby.x, standby.y, standby.roomName);
+            creep.moveTo(standby);
         }
     }
 };

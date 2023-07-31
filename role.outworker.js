@@ -6,7 +6,8 @@ let roleOutworker = {
                 creep.moveTo(sources, {visualizePathStyle: {stroke: '#ffaa00'}});
             }
         } else {
-            creep.moveTo(creep.memory.standby);
+            let standby = new RoomPosition(standby.x, standby.y, standby.roomName);
+            creep.moveTo(standby);
         }
     }
 };

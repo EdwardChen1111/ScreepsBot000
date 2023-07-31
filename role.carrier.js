@@ -9,7 +9,15 @@ let roleCarrier = {
 
         if (creep.memory.moving) {
             let doing = creep.memory.doing;
-            let target = Game.getObjectById(creep.memory.target);
+            let target = '';
+            
+            if (doing == s) {
+                let standby = creep.memory.standby;
+                target = new RoomPosition(standby.x, standby.y, standby.roomName);
+            } else {
+                target = Game.getObjectById(creep.memory.target);
+            }
+            
             if ((doing == 'p' && creep.pickup(target) == OK) || (doing == 't' && creep.transfer(target) == OK) || (doing == 's' && creep.pos.inRangeTo(target, 10))) {
                 creep.memory.moving = false;
             } else {
@@ -26,7 +34,6 @@ let roleCarrier = {
                     creep.memory.target = dropresources.sort((a,b) => b.amount - a.amount)[0].id;
                     creep.memory.doing = 'p';
                 } else {
-                    creep.memory.target = creep.memory.standby;
                     creep.memory.doing = 's';
                 }
 
