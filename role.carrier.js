@@ -39,7 +39,7 @@ let roleCarrier = {
 
                 creep.memory.moving = true;
             } else if (storage != '') {
-                creep.memory.target = storage[storage.length - 1];
+                creep.memory.target = storage[storage.length - 1].id;
                 creep.memory.doing = 't';
                 creep.memory.moving = true;
             }
