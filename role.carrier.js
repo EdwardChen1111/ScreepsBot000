@@ -10,8 +10,8 @@ let roleCarrier = {
         if (creep.memory.moving) {
             let doing = creep.memory.doing;
             let target = '';
-            
-            if (doing == s) {
+
+            if (doing == 's') {
                 let standby = creep.memory.standby;
                 target = new RoomPosition(standby.x, standby.y, standby.roomName);
             } else {
