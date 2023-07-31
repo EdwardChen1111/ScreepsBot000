@@ -36,7 +36,16 @@ let roleRoom = {
                 spawn[0].memory.uptime--;
                 
                 if (spawn[0].memory.bui != '') {
-                    bui = spawn[0].memory.bui.map(id => Game.getObjectById(id));
+                    bui = spawn[0].memory.bui;
+
+                    if (Game.getObjectById(bui[0]) == '') {
+                        bui.shift();
+                        spawn[0].memory.bui = bui;
+                    }
+                    
+                    if (bui != '') {
+                        bui = spawn[0].memory.bui.map(id => Game.getObjectById(id));
+                    }
                 }
                 if (spawn[0].memory.storage != '') {
                     storage = spawn[0].memory.storage.map(id => Game.getObjectById(id));

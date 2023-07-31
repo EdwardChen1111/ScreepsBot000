@@ -6,9 +6,7 @@ let roleOutworker = {
                 creep.moveTo(sources, {visualizePathStyle: {stroke: '#ffaa00'}});
             }
         } else {
-            const exitDir = creep.room.findExitTo(creep.memory.troom);
-            const exit = creep.pos.findClosestByRange(exitDir);
-            creep.moveTo(exit);
+            creep.moveTo(creep.memory.standby);
         }
     }
 };
