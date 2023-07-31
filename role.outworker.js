@@ -8,7 +8,7 @@ let roleOutworker = {
         } else {
             let standby = creep.memory.standby;
             let target = new RoomPosition(standby.x, standby.y, standby.roomName);
-            creep.moveTo(target);
+            creep.moveTo(target, {reusePath: 20});
         }
     }
 };

@@ -19,7 +19,7 @@ let roleCarrier = {
             }
             
             if (target != '' && ((doing == 'p' && creep.pickup(target) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) || (doing == 's' && !creep.pos.inRangeTo(target, 10)))) {
-                creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+                creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
             } else {
                 creep.memory.moving = false;
             }

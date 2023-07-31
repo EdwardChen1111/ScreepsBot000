@@ -6,11 +6,11 @@ let roleOutbuilder = {
                 if (resources != '') {
                     resources.sort((a,b) => a.amount - b.amount);
                     if (creep.pickup(resources[resources.length-1]) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(resources[resources.length-1]);
+                        creep.moveTo(resources[resources.length-1], {reusePath: 10});
                     }
                 } else {
                     let way = new RoomPosition(24, 24, creep.memory.troom);
-                    creep.moveTo(way);
+                    creep.moveTo(way, {reusePath: 10});
                 }
             } else {
                 let targets = creep.room.find(FIND_CONSTRUCTION_SITES);
@@ -23,7 +23,7 @@ let roleOutbuilder = {
                     if (targets != '') {
                         targets.sort((a,b) => a.hits - b.hits);
                         if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
+                            creep.moveTo(targets[0], {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
                         }
                     }
                 }

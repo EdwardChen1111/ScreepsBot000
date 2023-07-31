@@ -12,7 +12,7 @@ let roleBuilder = {
         }
         
         if (target != '') {
-            creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+            creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
         }
     }
 };
