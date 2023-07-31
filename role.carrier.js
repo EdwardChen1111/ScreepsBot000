@@ -9,7 +9,7 @@ let roleCarrier = {
 
         if (creep.memory.moving) {
             let doing = creep.memory.doing;
-            let target = Game.getgetObjectById(creep.memory.target);
+            let target = Game.getObjectById(creep.memory.target);
             if ((doing == 'p' && creep.pickup(target) == OK) || (doing == 't' && creep.transfer(target) == OK) || (doing == 's' && creep.pos.inRangeTo(target, 10))) {
                 creep.memory.moving = false;
             } else {
