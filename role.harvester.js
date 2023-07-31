@@ -21,33 +21,33 @@ let roleHarvester = {
                 if (bigresources != '') {
                     creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
                     creep.memory.doing = 'p';
-                    creep.memory.moving = ture;
+                    creep.memory.moving = true;
                 } else if (storage != '' && (spawneng != '' || towereng != '')) {
                     creep.memory.target = storage[0].id;
                     creep.memory.doing = 'w';
-                    creep.memory.moving = ture;
+                    creep.memory.moving = true;
                 } else if (resources != '') {
                     creep.memory.target = creep.pos.findClosestByRange(resources).id;
                     creep.memory.doing = 'p';
-                    creep.memory.moving = ture;
+                    creep.memory.moving = true;
                 }
             } else {
                 if (spawneng != '') {
                     creep.memory.target = creep.pos.findClosestByRange(spawneng).id;
                     creep.memory.doing = 't';
-                    creep.memory.moving = ture;
+                    creep.memory.moving = true;
                 } else if (towereng != '') {
                     creep.memory.target = creep.pos.findClosestByRange(towereng).id;
                     creep.memory.doing = 't';
-                    creep.memory.moving = ture;
+                    creep.memory.moving = true;
                 } else if (storage != '' && resources != '') {
                     creep.memory.target = storage[storage.length - 1].id;
                     creep.memory.doing = 't';
-                    creep.memory.moving = ture;
+                    creep.memory.moving = true;
                 } else if (terminal != undefined && terminal.store[RESOURCE_ENERGY] < 120000) {
                     creep.memory.target = terminal.id;
                     creep.memory.doing = 't';
-                    creep.memory.moving = ture;
+                    creep.memory.moving = true;
                 }
             }
         }
