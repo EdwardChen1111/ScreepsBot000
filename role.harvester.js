@@ -29,7 +29,7 @@ let roleHarvester = {
                 target = terminal;
             }
             
-            if (target != underfined && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            if (target != undefined && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
             }
         }
