@@ -20,7 +20,7 @@ let roleDoWork = {
         } else if (role == 'builder') {
             roleBuilder.run(creep, bui, controllertime, storage);
         } else if (role == 'harvester') {
-            roleHarvester.run(creep, resources, bigresources, spawneng, towereng, storage);
+            roleHarvester.run(creep, resources, bigresources, spawneng, towereng, storage, terminal);
         } else if (role == 'carrier') {
             roleCarrier.run(creep, storage);
         } else if (role == 'outworker') {

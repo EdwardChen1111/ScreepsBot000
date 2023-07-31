@@ -1,5 +1,5 @@
 let roleHarvester = {
-    run: function (creep, resources, bigresources, spawneng, towereng, storage) {
+    run: function (creep, resources, bigresources, spawneng, towereng, storage, terminal) {
         if (creep.store.getFreeCapacity() == creep.store.getCapacity() || (spawneng == '' && towereng == '' && resources != '' && creep.store.getFreeCapacity() > 0)) {
             if (bigresources != '') {
                 let clost = creep.pos.findClosestByRange(bigresources);
@@ -25,9 +25,11 @@ let roleHarvester = {
                 target = creep.pos.findClosestByRange(towereng);
             } else if (storage != '' && resources != '') {
                 target = storage[storage.length - 1];
+            } else if (terminal != '' && terminal.store[RESOURCE_ENERGY] < 120000) {
+                target = terminal;
             }
             
-            if (target != '' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            if (target != underfined && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
             }
         }
