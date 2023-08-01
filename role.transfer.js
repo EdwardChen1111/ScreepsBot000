@@ -74,7 +74,7 @@ let roleTransfer = {
             }
         }
 
-        if (factory.store[RESOURCE_ENERGY] >= 100 && factory.store[sourcetype] >= 500) {
+        if (factory.cooldown == 0 && factory.store[RESOURCE_ENERGY] >= 100 && factory.store[sourcetype] >= 500) {
             factory.produce(bar);
         }
 	}
