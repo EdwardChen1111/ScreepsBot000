@@ -16,7 +16,9 @@ let roleHarvester = {
             } else {
                 creep.memory.moving = false;
             }
-        } else {
+        }
+        
+        if (!creep.memory.moving) {
             if (freeC == creep.store.getCapacity()) {
                 if (bigresources != '') {
                     creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
