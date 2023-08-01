@@ -11,6 +11,7 @@ let roleClaimer = require('role.claimer');
 let roleSoldier = require('role.soldier');
 let roleHealer = require('role.healer');
 let roleMiner = require('role.miner');
+let roleTransfer = require('role.transfer');
 
 let roleDoWork = {
     tell: function (creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn, terminal) {
@@ -41,6 +42,8 @@ let roleDoWork = {
             roleHealer.run(creep);
         } else if (role == 'miner') {
             roleMiner.run(creep, terminal);
+        } else if (role == 'transfer') {
+            roleMiner.run(creep, storage, terminal);
         }
 	}
 };

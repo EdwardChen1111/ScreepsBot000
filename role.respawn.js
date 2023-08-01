@@ -12,7 +12,7 @@ let roleRespawn = {
         let standby = new RoomPosition(24, 24, memory.troom);
         let dospawn = false;
         let waring = ['worker', 'harvester'];
-        let normal = ['builder', 'outworker', 'carrier', 'outbuilder', 'claimer', 'miner'];
+        let normal = ['builder', 'outworker', 'carrier', 'outbuilder', 'claimer', 'miner', 'transfer'];
             
         if (waring.indexOf(type) != -1) {
             dospawn = true;

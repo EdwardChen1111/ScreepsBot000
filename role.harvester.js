@@ -17,7 +17,7 @@ let roleHarvester = {
                 creep.memory.moving = false;
             }
         }
-        
+
         if (!creep.memory.moving) {
             if (freeC == creep.store.getCapacity()) {
                 if (bigresources != '') {
@@ -44,10 +44,6 @@ let roleHarvester = {
                     creep.memory.moving = true;
                 } else if (storage != '' && resources != '') {
                     creep.memory.target = storage[storage.length - 1].id;
-                    creep.memory.doing = 't';
-                    creep.memory.moving = true;
-                } else if (terminal != undefined && terminal.store[RESOURCE_ENERGY] < 120000) {
-                    creep.memory.target = terminal.id;
                     creep.memory.doing = 't';
                     creep.memory.moving = true;
                 }
