@@ -1,5 +1,5 @@
 let roleHarvester = {
-    run: function (creep, resources, bigresources, spawneng, towereng, storage, terminal) {
+    run: function (creep, resources, bigresources, spawneng, towereng, storage) {
         let freeC = creep.store.getFreeCapacity();
         if (creep.memory.moving == '') {
             creep.memory.moving = false;

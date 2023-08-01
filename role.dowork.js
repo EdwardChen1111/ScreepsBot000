@@ -21,7 +21,7 @@ let roleDoWork = {
         } else if (role == 'builder') {
             roleBuilder.run(creep, bui, controllertime, storage);
         } else if (role == 'harvester') {
-            roleHarvester.run(creep, resources, bigresources, spawneng, towereng, storage, terminal);
+            roleHarvester.run(creep, resources, bigresources, spawneng, towereng, storage);
         } else if (role == 'carrier') {
             roleCarrier.run(creep, storage);
         } else if (role == 'outworker') {
@@ -43,7 +43,7 @@ let roleDoWork = {
         } else if (role == 'miner') {
             roleMiner.run(creep, terminal);
         } else if (role == 'transfer') {
-            roleMiner.run(creep, storage, terminal);
+            roleTransfer.run(creep, storage, terminal);
         }
 	}
 };
