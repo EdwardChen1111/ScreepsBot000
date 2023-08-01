@@ -21,21 +21,6 @@ let roleTransfer = {
             creep.memory.nt = '';
         }
 
-        if (creep.memory.moving) {
-            let doing = creep.memory.doing;
-            let target = Game.getObjectById(creep.memory.target);
-
-            if (target != '' && ((doing == 'w' && creep.withdraw(target, nt) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, nt) == ERR_NOT_IN_RANGE))) {
-                creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
-            } else {
-                creep.memory.moving = false;
-            }
-
-            if (doing == 't' && nt == sourcetype) {
-                factory.produce(bar);
-            }
-        }
-        
         if (!creep.memory.moving) {
             if (freeC == creep.store.getCapacity()) {
                 creep.memory.doing = 'w';
@@ -74,6 +59,22 @@ let roleTransfer = {
                     creep.memory.nt = bar;
                     creep.memory.moving = true;
                 }
+            }
+        }
+
+        if (creep.memory.moving) {
+            let doing = creep.memory.doing;
+            let target = Game.getObjectById(creep.memory.target);
+            let nt = creep.memory.nt;
+
+            if (target != '' && ((doing == 'w' && creep.withdraw(target, nt) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, nt) == ERR_NOT_IN_RANGE))) {
+                creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
+            } else {
+                creep.memory.moving = false;
+            }
+
+            if (doing == 't' && nt == sourcetype) {
+                factory.produce(bar);
             }
         }
 	}
