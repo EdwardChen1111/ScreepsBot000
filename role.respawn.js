@@ -17,9 +17,11 @@ let roleRespawn = {
         if (waring.indexOf(type) != -1) {
             dospawn = true;
         } else if (targets == '' && normal.indexOf(type) != -1) {
-            if (type != 'claimer') {
+            if (type != 'claimer' && type != 'miner') {
                 dospawn = true;
-            } else if (Game.getObjectById(sourceId) == null || Game.getObjectById(sourceId).reservation == undefined || Game.getObjectById(sourceId).reservation.ticksToEnd < 4000) {
+            } else if (type == 'claimer' && (Game.getObjectById(sourceId) == null || Game.getObjectById(sourceId).reservation == undefined || Game.getObjectById(sourceId).reservation.ticksToEnd < 4000)) {
+                dospawn = true;
+            } else if (type == 'miner' && Game.getObjectById(sourceId).ticksToRegeneration == undefined) {
                 dospawn = true;
             }
         } else if (targets != '' && type == 'army'){
