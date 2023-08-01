@@ -73,7 +73,7 @@ let roleTransfer = {
                 creep.memory.moving = false;
             }
 
-            if (doing == 't' && nt == sourcetype) {
+            if (doing == 't' && target == factory) {
                 factory.produce(bar);
             }
         }
