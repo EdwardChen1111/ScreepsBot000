@@ -1,3 +1,4 @@
+let roleFactory = require('role.factory');
 let roleTransfer = {
     run: function (creep, storage, terminal) {
         let barformula = {
@@ -9,7 +10,7 @@ let roleTransfer = {
             RESOURCE_ZYNTHIUM: RESOURCE_ZYNTHIUM_BAR,
             RESOURCE_CATALYST: RESOURCE_PURIFIER,
             RESOURCE_GHODIUM: RESOURCE_GHODIUM_MELT,
-        }
+        };
         let freeC = creep.store.getFreeCapacity();
         let sourcetype = Game.getObjectById(creep.memory.sourceID[0]).mineralType;
         let factory = Game.getObjectById(creep.memory.sourceID[1]);
@@ -72,11 +73,9 @@ let roleTransfer = {
             } else {
                 creep.memory.moving = false;
             }
-
-            if (doing == 't' && target.id == factory.id) {
-                factory.produce(bar);
-            }
         }
+
+        roleFactory.run(factory, barformula, sourcetype);
 	}
 };
 module.exports = roleTransfer;
