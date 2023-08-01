@@ -35,7 +35,7 @@ let roleTransfer = {
                     creep.memory.moving = true;
                 } else if (factory != '' && factory.store[bar] > 0) {
                     creep.memory.target = factory.id;
-                    creep.memory.nt = RESOURCE_ENERGY;
+                    creep.memory.nt = bar;
                     creep.memory.moving = true;
                 }
             } else {
