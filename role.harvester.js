@@ -24,7 +24,7 @@ let roleHarvester = {
                     creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
                     creep.memory.doing = 'p';
                     creep.memory.moving = true;
-                } else if (storage != '' && (spawneng != '' || towereng != '')) {
+                } else if (storage != '' && (spawneng == '' || towereng == '')) {
                     creep.memory.target = storage[0].id;
                     creep.memory.doing = 'w';
                     creep.memory.moving = true;
