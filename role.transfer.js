@@ -1,4 +1,3 @@
-let roleFactory = require('role.factory');
 let roleTransfer = {
     run: function (creep, storage, terminal) {
         let barformula = {
@@ -75,7 +74,9 @@ let roleTransfer = {
             }
         }
 
-        roleFactory.run(factory, barformula, sourcetype);
+        if (factory.store[RESOURCE_ENERGY] >= 100 && factory.store[sourcetype] >= 500) {
+            factory.produce(bar);
+        }
 	}
 };
 module.exports = roleTransfer;
