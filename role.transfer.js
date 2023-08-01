@@ -1,14 +1,14 @@
 let roleTransfer = {
     run: function (creep, storage, terminal) {
         let barformula = {
-            RESOURCE_LEMERGIUM: RESOURCE_LEMERGIUM_BAR,
-            RESOURCE_HYDROGEN: RESOURCE_REDUCTANT,
-            RESOURCE_UTRIUM: RESOURCE_UTRIUM_BAR,
-            RESOURCE_OXYGEN: RESOURCE_OXIDANT,
-            RESOURCE_KEANIUM: RESOURCE_KEANIUM_BAR,
-            RESOURCE_ZYNTHIUM: RESOURCE_ZYNTHIUM_BAR,
-            RESOURCE_CATALYST: RESOURCE_PURIFIER,
-            RESOURCE_GHODIUM: RESOURCE_GHODIUM_MELT,
+            L: RESOURCE_LEMERGIUM_BAR,
+            H: RESOURCE_REDUCTANT,
+            U: RESOURCE_UTRIUM_BAR,
+            O: RESOURCE_OXIDANT,
+            K: RESOURCE_KEANIUM_BAR,
+            Z: RESOURCE_ZYNTHIUM_BAR,
+            X: RESOURCE_PURIFIER,
+            G: RESOURCE_GHODIUM_MELT,
         };
         let freeC = creep.store.getFreeCapacity();
         let sourcetype = Game.getObjectById(creep.memory.sourceID[0]).mineralType;
