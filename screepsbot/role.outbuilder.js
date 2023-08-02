@@ -19,7 +19,7 @@ let roleOutbuilder = {
                     }
                 }
 
-                if (creep.memory.containerID != '' && Game.getObjectById(creep.memory.containerID).store.getFreeCapacity() > 0) {
+                if (creep.memory.containerID != '' && Game.getObjectById(creep.memory.containerID).store.getUsedCapacity() > 0) {
                     creep.memory.target = creep.memory.containerID;
                     creep.memory.doing = 'w';
                     creep.memory.moving = true;
