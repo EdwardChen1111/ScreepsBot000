@@ -1,0 +1,16 @@
+Game.spawns[#spawnName].spawnCreep(
+    #bodypart(Array), 
+    #`${#roomname}_${#profession}00${#count}`, 
+    { 
+        memory: { 
+            role: #profession, 
+            sourceID: #targetid, 
+            troom: #toroom for out creeps, 
+            hroom: #homeroom for soldier and army, 
+            out: #not working(blank), 
+            spawn: #which it spawn, 
+            roomname: #usually is spawnroom, 
+            body: #bodypart(Array)
+        }
+    }
+)
