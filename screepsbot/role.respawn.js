@@ -16,7 +16,9 @@ let roleRespawn = {
         let normal = ['builder', 'outworker', 'carrier', 'outbuilder', 'claimer', 'miner', 'transfer'];
             
         if (waring.indexOf(type) != -1) {
-            dospawn = true;
+            if (checkname == name || (checkname != name && (!Game.creeps[checkname] || Game.creeps[checkname].ticksToLive < 100))) {
+                dospawn = true;
+            }
         } else if (targets == '' && normal.indexOf(type) != -1) {
             if (type != 'claimer' && type != 'miner' && checkname == name) {
                 dospawn = true;
