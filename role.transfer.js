@@ -11,9 +11,7 @@ let roleTransfer = {
             G: RESOURCE_GHODIUM_MELT,
         };
         let freeC = creep.store.getFreeCapacity();
-        let sourcetype = Game.getObjectById(creep.memory.sourceID[0]).mineralType;
         let factory = Game.getObjectById(creep.memory.sourceID[1]);
-        let bar = barformula[sourcetype];
         if (creep.memory.moving == '') {
             creep.memory.moving = false;
             creep.memory.doing = '';
@@ -25,28 +23,34 @@ let roleTransfer = {
             if (freeC == creep.store.getCapacity()) {
                 creep.memory.doing = 'w';
 
-                if (terminal != '' && terminal.store[sourcetype] > 500) {
-                    creep.memory.target = terminal.id;
-                    creep.memory.nt = sourcetype;
-                    creep.memory.moving = true;
+                if (terminal != '' && (terminal.store.getUsedCapacity() - terminal.store[RESOURCE_ENERGY]) > 500) {
+                    for (let st in terminal.store) {
+                        if (st != 'energy' && barformula[st] != undefined) {
+                            creep.memory.target = terminal.id;
+                            creep.memory.nt = st;
+                            creep.memory.moving = true;
+                        }
+                    }
                 } else if (storage != '' && (factory.store[RESOURCE_ENERGY] < 3000 || terminal.store[RESOURCE_ENERGY] < 10000)) {
                     creep.memory.target = storage[0].id;
                     creep.memory.nt = RESOURCE_ENERGY;
                     creep.memory.moving = true;
-                } else if (factory != '' && factory.store[bar] > 0) {
-                    creep.memory.target = factory.id;
-                    creep.memory.nt = bar;
-                    creep.memory.moving = true;
+                } else if (factory != '' && (factory.store.getUsedCapacity() - factory.store[RESOURCE_ENERGY]) > 0) {
+                    for (let st in factory.store) {
+                        if (st != 'energy' && barformula[st] == undefined) {
+                            creep.memory.target = factory.id;
+                            creep.memory.nt = barformula[st];
+                            creep.memory.moving = true;
+                            break;
+                        }
+                    }
                 }
             } else {
                 creep.memory.doing = 't';
 
-                if (creep.store[sourcetype] > 0) {
-                    creep.memory.target = factory.id;
-                    creep.memory.nt = sourcetype;
-                    creep.memory.moving = true;
-                } else if (creep.store[RESOURCE_ENERGY] > 0) {
+                if (creep.store[RESOURCE_ENERGY] > 0) {
                     creep.memory.nt = RESOURCE_ENERGY;
+
                     if (factory.store[RESOURCE_ENERGY] < 3000) {
                         creep.memory.target = factory.id;
                         creep.memory.moving = true;
@@ -54,10 +58,20 @@ let roleTransfer = {
                         creep.memory.target = terminal.id;
                         creep.memory.moving = true;
                     }
-                } else if (creep.store[bar] > 0) {
-                    creep.memory.target = terminal.id;
-                    creep.memory.nt = bar;
-                    creep.memory.moving = true;
+                } else {
+                    for (let st in creep.store) {
+                        creep.memory.nt = st;
+
+                        if (barformula[st] == undefined) {
+                            creep.memory.target = terminal.id;
+                            creep.memory.moving = true;
+                            break;
+                        } else {
+                            creep.memory.target = factory.id;
+                            creep.memory.moving = true;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -74,8 +88,12 @@ let roleTransfer = {
             }
         }
 
-        if (factory.cooldown == 0 && factory.store[RESOURCE_ENERGY] >= 100 && factory.store[sourcetype] >= 500) {
-            factory.produce(bar);
+        if (factory.cooldown == 0 && factory.store[RESOURCE_ENERGY] >= 100) {
+            for (let st in factory.store) {
+                if (st != 'energy' && barformula[st] != undefined) {
+                    factory.produce(barformula[st]);
+                }
+            }
         }
 	}
 };
