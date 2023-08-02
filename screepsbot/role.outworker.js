@@ -18,7 +18,7 @@ let roleOutworker = {
                 creep.memory.doing = 'h';
                 creep.memory.moving = true;
             } else {
-                if (creep.memory.containerID == '') {
+                if (creep.memory.containerID == undefined || creep.memory.containerID == '') {
                     let container = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType == STRUCTURE_CONTAINER}});
                     if (container != '') {
                         creep.memory.containerID = container[0].id;

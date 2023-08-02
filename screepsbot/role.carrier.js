@@ -11,10 +11,10 @@ let roleCarrier = {
             if (freeC > 0) {
                 let dropresources = '';
                 creep.memory.moving = true;
-                
+
                 if (creep.room.name == creep.memory.troom) {
                     dropresources = creep.room.find(FIND_DROPPED_RESOURCES);
-                    if (creep.memory.containerID == '') {
+                    if (creep.memory.containerID == undefined || creep.memory.containerID == '') {
                         let container = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType == STRUCTURE_CONTAINER}});
                         if (container != '') {
                             creep.memory.containerID = container[0].id;

@@ -10,7 +10,7 @@ let roleOutbuilder = {
 
         if (creep.room.name == creep.memory.troom && !creep.memory.moving){
             if (freeC == Cap) {
-                if (creep.memory.containerID == '') {
+                if (creep.memory.containerID == undefined || creep.memory.containerID == '') {
                     let container = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType == STRUCTURE_CONTAINER}});
                     if (container != '') {
                         creep.memory.containerID = container[0].id;
