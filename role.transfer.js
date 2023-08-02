@@ -26,7 +26,7 @@ let roleTransfer = {
                 if (terminal != '' && (terminal.store.getUsedCapacity() - terminal.store[RESOURCE_ENERGY]) > 500) {
                     for (let st in terminal.store) {
                         if (st != 'energy' && barformula[st] != undefined) {
-                            creep.memory.target = terminal.id;
+                            creep.memory.target = factory.id;
                             creep.memory.nt = st;
                             creep.memory.moving = true;
                         }
@@ -38,8 +38,8 @@ let roleTransfer = {
                 } else if (factory != '' && (factory.store.getUsedCapacity() - factory.store[RESOURCE_ENERGY]) > 0) {
                     for (let st in factory.store) {
                         if (st != 'energy' && barformula[st] == undefined) {
-                            creep.memory.target = factory.id;
-                            creep.memory.nt = barformula[st];
+                            creep.memory.target = terminal.id;
+                            creep.memory.nt = st;
                             creep.memory.moving = true;
                             break;
                         }
