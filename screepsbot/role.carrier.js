@@ -10,6 +10,8 @@ let roleCarrier = {
         if (!creep.memory.moving) {
             if (freeC > 0) {
                 let dropresources = '';
+                creep.memory.moving = true;
+                
                 if (creep.room.name == creep.memory.troom) {
                     dropresources = creep.room.find(FIND_DROPPED_RESOURCES);
                     if (creep.memory.containerID == '') {
@@ -20,19 +22,17 @@ let roleCarrier = {
                             creep.memory.containerID = '';
                         }
                     }
-                }
 
-                if (dropresources != '') {
-                    creep.memory.target = dropresources.sort((a,b) => b.amount - a.amount)[0].id;
-                    creep.memory.doing = 'p';
-                } else if (creep.memory.containerID != '') {
-                    creep.memory.target = creep.memory.containerID;
-                    creep.memory.doing = 'w';
+                    if (dropresources != '') {
+                        creep.memory.target = dropresources.sort((a,b) => b.amount - a.amount)[0].id;
+                        creep.memory.doing = 'p';
+                    } else if (creep.memory.containerID != '') {
+                        creep.memory.target = creep.memory.containerID;
+                        creep.memory.doing = 'w';
+                    }
                 } else {
                     creep.memory.doing = 's';
                 }
-
-                creep.memory.moving = true;
             } else if (storage != '') {
                 creep.memory.target = storage[storage.length - 1].id;
                 creep.memory.doing = 't';
