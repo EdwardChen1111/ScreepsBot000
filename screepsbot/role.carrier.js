@@ -16,6 +16,8 @@ let roleCarrier = {
                         let container = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType == STRUCTURE_CONTAINER}});
                         if (container != '') {
                             creep.memory.containerID = container[0].id;
+                        } else {
+                            creep.memory.containerID = '';
                         }
                     }
                 }

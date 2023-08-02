@@ -18,11 +18,13 @@ let roleRespawn = {
         if (waring.indexOf(type) != -1) {
             dospawn = true;
         } else if (targets == '' && normal.indexOf(type) != -1) {
-            if (type != 'claimer' && type != 'miner') {
+            if (type != 'claimer' && type != 'miner' && checkname == name) {
                 dospawn = true;
             } else if (type == 'claimer' && (Game.getObjectById(sourceId) == null || Game.getObjectById(sourceId).reservation == undefined || Game.getObjectById(sourceId).reservation.ticksToEnd < 4000)) {
                 dospawn = true;
             } else if (type == 'miner' && Game.getObjectById(sourceId).ticksToRegeneration == undefined) {
+                dospawn = true;
+            } else if (checkname != name && (!Game.creeps[checkname] || Game.creeps[checkname].ticksToLive < 100)) {
                 dospawn = true;
             }
         } else if (targets != '' && type == 'army'){
