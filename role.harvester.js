@@ -31,7 +31,7 @@ let roleHarvester = {
                     creep.memory.target = creep.pos.findClosestByRange(towereng).id;
                     creep.memory.doing = 't';
                     creep.memory.moving = true;
-                } else if (terminal != '' && Memory.creeps[`${creep.room.name}_Transfer000`] != undefined && terminal.store[RESOURCE_ENERGY] < 10000) {
+                } else if (terminal != '' && Memory.creeps[`${creep.room.name}_Transfer000`] == undefined && terminal.store[RESOURCE_ENERGY] < 10000) {
                     creep.memory.target = terminal.id;
                     creep.memory.doing = 't';
                     creep.memory.moving = true;
