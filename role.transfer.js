@@ -23,25 +23,27 @@ let roleTransfer = {
             if (freeC == creep.store.getCapacity()) {
                 creep.memory.doing = 'w';
 
-                if (terminal != '' && (terminal.store.getUsedCapacity() - terminal.store[RESOURCE_ENERGY]) > 500) {
-                    for (let st in terminal.store) {
-                        if (st != 'energy' && barformula[st] != undefined) {
-                            creep.memory.target = factory.id;
-                            creep.memory.nt = st;
-                            creep.memory.moving = true;
-                        }
-                    }
-                } else if (storage != '' && (factory.store[RESOURCE_ENERGY] < 3000 || terminal.store[RESOURCE_ENERGY] < 10000)) {
+                if (storage != '' && (factory.store[RESOURCE_ENERGY] < 3000 || terminal.store[RESOURCE_ENERGY] < 10000)) {
                     creep.memory.target = storage[0].id;
                     creep.memory.nt = RESOURCE_ENERGY;
                     creep.memory.moving = true;
-                } else if (factory != '' && (factory.store.getUsedCapacity() - factory.store[RESOURCE_ENERGY]) > 0) {
-                    for (let st in factory.store) {
-                        if (st != 'energy' && barformula[st] == undefined) {
+                } else if (terminal != '' && (terminal.store.getUsedCapacity() - terminal.store[RESOURCE_ENERGY]) > 500) {
+                    for (let st in terminal.store) {
+                        if (st != 'energy' && barformula[st] != undefined && terminal.store[st] > 500) {
                             creep.memory.target = terminal.id;
                             creep.memory.nt = st;
                             creep.memory.moving = true;
                             break;
+                        }
+                    }
+                    if (!creep.memory.moving && factory != '' && (factory.store.getUsedCapacity() - factory.store[RESOURCE_ENERGY]) > 0) {
+                        for (let st in factory.store) {
+                            if (st != 'energy' && barformula[st] == undefined) {
+                                creep.memory.target = factory.id;
+                                creep.memory.nt = st;
+                                creep.memory.moving = true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -65,12 +67,12 @@ let roleTransfer = {
                         if (barformula[st] == undefined) {
                             creep.memory.target = terminal.id;
                             creep.memory.moving = true;
-                            break;
                         } else {
                             creep.memory.target = factory.id;
                             creep.memory.moving = true;
-                            break;
                         }
+                        
+                        break;
                     }
                 }
             }
