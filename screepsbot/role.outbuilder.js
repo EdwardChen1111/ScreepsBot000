@@ -19,7 +19,11 @@ let roleOutbuilder = {
                     }
                 }
 
-                if (creep.memory.containerID == '') {
+                if (creep.memory.containerID != '' && Game.getObjectById(creep.memory.containerID).store.getFreeCapacity() > 0) {
+                    creep.memory.target = creep.memory.containerID;
+                    creep.memory.doing = 'w';
+                    creep.memory.moving = true;
+                } else {
                     let resources = creep.room.find(FIND_DROPPED_RESOURCES);
                     if (resources != '') {
                         resources.sort((a,b) => a.amount - b.amount);
@@ -27,10 +31,6 @@ let roleOutbuilder = {
                         creep.memory.doing = 'p';
                         creep.memory.moving = true;
                     }
-                } else {
-                    creep.memory.target = creep.memory.containerID;
-                    creep.memory.doing = 'w';
-                    creep.memory.moving = true;
                 }
             } else {
                 let targets = creep.room.find(FIND_CONSTRUCTION_SITES);
