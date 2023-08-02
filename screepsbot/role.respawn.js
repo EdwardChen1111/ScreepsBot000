@@ -16,7 +16,7 @@ let roleRespawn = {
         let normal = ['builder', 'outworker', 'carrier', 'outbuilder', 'claimer', 'miner', 'transfer'];
             
         if (waring.indexOf(type) != -1) {
-            if (checkname == name || (checkname != name && (!Game.creeps[checkname] || Game.creeps[checkname].ticksToLive < 100))) {
+            if (checkname == name || (checkname != name && (!Game.creeps[checkname] || Game.creeps[checkname].ticksToLive < 50))) {
                 dospawn = true;
             }
         } else if (targets == '' && normal.indexOf(type) != -1) {
@@ -26,7 +26,7 @@ let roleRespawn = {
                 dospawn = true;
             } else if (type == 'miner' && Game.getObjectById(sourceId).ticksToRegeneration == undefined) {
                 dospawn = true;
-            } else if (checkname != name && (!Game.creeps[checkname] || Game.creeps[checkname].ticksToLive < 100)) {
+            } else if (checkname != name && (!Game.creeps[checkname] || Game.creeps[checkname].ticksToLive < 150)) {
                 dospawn = true;
             }
         } else if (targets != '' && type == 'army'){
