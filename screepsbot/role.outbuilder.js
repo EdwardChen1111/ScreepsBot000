@@ -39,7 +39,7 @@ let roleOutbuilder = {
                 } else {
                     targets = creep.room.find(FIND_STRUCTURES, {filter: object => object.hits < object.hitsMax});
                     if (targets != '') {
-                        targets.sort((a,b) => a.hits - b.hits);
+                        targets.sort((a,b) => (a.hits/a.hitsMax) - (b.hits/b.hitsMax));
                         creep.memory.target = targets[0].id;
                         creep.memory.doing = 'r';
                         creep.memory.moving = true;
