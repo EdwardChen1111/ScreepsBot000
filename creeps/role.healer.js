@@ -11,7 +11,8 @@ let roleHealer = {
                 let way = new RoomPosition(24, 24, creep.memory.hroom);
                 creep.moveTo(way);
             }
-        } else {
+        } 
+        else {
             const exitDir = creep.room.findExitTo(creep.memory.troom);
             const exit = creep.pos.findClosestByRange(exitDir);
             creep.moveTo(exit);

@@ -17,18 +17,20 @@ var roleBuilder = {
 	    if (creep.memory.building) {
 	        if (controller.ticksToDowngrade > 30000 && (needbuild)) {
                 if (creep.build(needbuild) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(needbuild, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.moveTo(needbuild);
                 }
-	        } else {
+	        } 
+	        else {
 	            if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(controller, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.moveTo(controller);
                     console.log(controller.progressTotal - creep.room.controller.progress)
                 }
 	        }
-	    } else {
+	    } 
+	    else {
             if(link != undefined){
                 if(link.store.getUsedCapacity(RESOURCE_ENERGY) == 0){
-                    var storage = creep.pos.findClosestByRange(creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}}));
+                    let storage = creep.room.storage;
                     if (storage) {
                         if (creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(storage);
@@ -40,7 +42,8 @@ var roleBuilder = {
                         creep.moveTo(link);
                     }
                 }
-            }else{
+            }
+            else{
                 if (creep.pickup(resources) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(resources);
                 }

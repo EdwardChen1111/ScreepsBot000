@@ -12,11 +12,13 @@ let roleSoldier = {
                     creep.rangedMassAttack();
                     creep.attack(clost);
                 }
-            } else {
+            } 
+            else {
                 let way = new RoomPosition(19, 12, creep.memory.hroom);
                 creep.moveTo(way);
             }
-        } else {
+        } 
+        else {
             const exitDir = creep.room.findExitTo(creep.memory.hroom);
             const exit = creep.pos.findClosestByRange(exitDir);
             creep.moveTo(exit);

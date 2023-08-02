@@ -11,7 +11,9 @@ var roleLink = {
             linkFrom = Game.rooms['E11S35'].lookForAt('structure', link.pos.x, link.pos.y)[0];
             linkTo = Game.rooms['E11S35'].lookForAt('structure', 25, 36)[0];
         }
-        linkFrom.transferEnergy(linkTo);
+        if(linkFrom != '' && linkTo != ''){
+            linkFrom.transferEnergy(linkTo);
+        }
     }
 };
 module.exports = roleLink;

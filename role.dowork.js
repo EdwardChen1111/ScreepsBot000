@@ -41,9 +41,9 @@ var roleDoWork = {
         if(creep.memory.role == 'claimer') {
             roleClaimer.run(creep);
         }
-        if(creep.memory.role == 'army') {
-            roleArmy.run(creep);
-        }
+        //if(creep.memory.role == 'army') {
+        //    roleArmy.run(creep);
+        //}
         if(creep.memory.role == 'lumberjack') {
             roleLumberjack.run(creep);
         }

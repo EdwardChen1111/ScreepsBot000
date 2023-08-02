@@ -6,10 +6,12 @@ let roleTower = {
         if (fight.length > 0) {                                                                                                                                       
             fight.sort((a,b) => a.hits - b.hits);
             tower.attack(fight[0]);
-        } else if(doct.length > 0) {
+        } 
+        else if(doct.length > 0) {
             doct.sort((a,b) => a.hits - b.hits);
             tower.heal(doct[0]);
-        } else if(fix.length > 0) {
+        } 
+        else if(fix.length > 0) {
             fix.sort((a,b) => a.hits - b.hits);
             tower.repair(fix[0]);
         }

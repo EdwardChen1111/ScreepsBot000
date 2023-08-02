@@ -3,6 +3,7 @@ var roleRespawn = require('role.respawn');
 var roleTower = require('role.tower');
 var roleLink = require('role.link');
 
+//console.log(Game.cpu.bucket)
 
 module.exports.loop = function () {
     

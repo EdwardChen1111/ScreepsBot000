@@ -7,15 +7,15 @@ let roleHarvester = {
         let extension = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0}});
         let spawn = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_SPAWN) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0}});
         let tower = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TOWER) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 200}});
-        let storage = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
+        let storage = creep.room.storage;
         let lab = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_LAB) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0}});
         let link = Game.getObjectById(creep.memory.linkID)
-        let terminal = creep.pos.findClosestByRange(Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TERMINAL)}}));
+        let terminal = creep.room.terminal;
         let container = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_CONTAINER) && structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;}});
         
         if(creep.store.getUsedCapacity(RESOURCE_LEMERGIUM) > 0){
             if(creep.transfer(terminal, RESOURCE_LEMERGIUM) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(terminal, {visualizePathStyle: {stroke: '#ffaa00'}});
+                creep.moveTo(terminal);
             }
         }
         else if (creep.store.getFreeCapacity() == creep.store.getCapacity() || (extension == '' && spawn == '' && tower == '' && resources != '' && creep.store.getFreeCapacity() > 0)) {
@@ -42,9 +42,9 @@ let roleHarvester = {
                     creep.moveTo(clost);
                 }
             } 
-            else if (storage != '') {
-                if (creep.withdraw(storage[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(storage[0]);
+            else if (storage) {
+                if (creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(storage);
                 }
             }
         }
@@ -52,38 +52,37 @@ let roleHarvester = {
             if (extension != '' && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 50) {
                 const clost = creep.pos.findClosestByRange(extension);
                 if (creep.transfer(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.moveTo(clost);
                 }
             }
             else if (spawn != '' && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 300) {
                 const clost = creep.pos.findClosestByRange(spawn);
                 if (creep.transfer(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.moveTo(clost);
                 }
             } 
             else if (tower != '' && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 300) {
                 const clost = creep.pos.findClosestByRange(tower);
                 if (creep.transfer(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.moveTo(clost);
                 }
             }
             else if (terminal != '' && terminal.store.getUsedCapacity(RESOURCE_ENERGY) < 20000 && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
                 if (creep.transfer(terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(terminal, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.moveTo(terminal);
                 }
             } 
             else if (lab != '' && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 100) {
                 const clost = creep.pos.findClosestByRange(lab);
                 if (creep.transfer(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.moveTo(clost);
                 }
             } 
             else {
-                if (storage.length > 0) {
-                    const clost = creep.pos.findClosestByRange(storage);
+                if (storage) {
                     for(const resourceType in creep.store) {
-                        if (creep.transfer(clost, resourceType) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
+                        if (creep.transfer(storage, resourceType) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(storage);
                         }
                     }
                     

@@ -5,7 +5,8 @@ let roleClaimer = {
             if (creep.reserveController(controller) == ERR_NOT_IN_RANGE || (controller.reservation != undefined && controller.reservation.username != 'Chenwu' && creep.attackController(controller) == ERR_NOT_IN_RANGE)) {
                 creep.moveTo(controller);
             }
-        } else {
+        } 
+        else {
             const exitDir = creep.room.findExitTo(creep.memory.troom);
             const exit = creep.pos.findClosestByRange(exitDir);
             creep.moveTo(exit);

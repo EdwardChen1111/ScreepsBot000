@@ -4,7 +4,7 @@ let roleArmy = {
 
         for (let name in spawn[0].memory.appendrange) {
             let room = spawn[0].memory.appendrange[name];
-            targets = Game.rooms[room].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'EdwardChen1111')}});
+            targets = Game.rooms[room].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username == 'Invader')}});
             if (targets != '') {
                 console.log(targets);
                 break;    
@@ -17,7 +17,8 @@ let roleArmy = {
                 creep.rangedAttack(targets[0]);
                 creep.attack(targets[0]);
             }
-        } else {
+        } 
+        else {
             let way = new RoomPosition(24, 24, creep.memory.hroom);
             creep.moveTo(way);
         }

@@ -14,7 +14,7 @@ var roleRespawn = {
         let targets = '';
 
         for (let name in Game.rooms) {
-            targets = Game.rooms[name].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'EdwardChen1111')}});
+            targets = Game.rooms[name].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username == 'Invader')}});
             if (targets != '') {
                 Game.notify(Game.rooms[name].name , 0)
                 break;    
@@ -62,13 +62,10 @@ var roleRespawn = {
                 else if (type == 'outB') {
                     dospawn = true;
                 }
-                else if (type == 'outG') {
-                    dospawn = true;
-                }
                 else if (type == 'outAll') {
+                    troom = 'E11S36';
                     dospawn = true;
-                    troom = 'E10S35';
-                    type = 'outG'
+                    body = [WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE];
                 }
             } 
             else {

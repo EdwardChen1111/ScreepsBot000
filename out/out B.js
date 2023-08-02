@@ -2,7 +2,7 @@ var roleBuilder = {
     run: function(creep) {
 
         let needbuild = creep.pos.findClosestByRange(creep.room.find(FIND_CONSTRUCTION_SITES));
-        let storage = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
+        let storage = creep.room.storage;
         let link = Game.getObjectById(creep.memory.linkID);
         
 	    if (creep.memory.building && creep.store.getUsedCapacity() == 0) {
@@ -16,12 +16,12 @@ var roleBuilder = {
 	    if (creep.memory.building) {
 	        if (creep.room.controller.ticksToDowngrade > 10000 && (needbuild)) {
                 if (creep.build(needbuild) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(needbuild, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.moveTo(needbuild);
                 }
 	        } 
 	        else {
 	            if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.moveTo(creep.room.controller);
                 }
 	        }
 	    } 

@@ -7,8 +7,9 @@ var roleCarrier = {
             if (creep.room.name == creep.memory.hroom) {
                 if(creep.memory.link){
                     var target = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_LINK) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;}});
-                }else{
-                    var target = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
+                }
+                else{
+                    var target = creep.room.storage;
                 }
                 if (target.length>0) {
                     const point = creep.pos.findClosestByRange(target);
@@ -20,7 +21,8 @@ var roleCarrier = {
                     const way = new RoomPosition(27, 18, creep.memory.hroom);
                     if(creep.pos.x == 27 && creep.pos.y == 18 && creep.room.name == creep.memory.hroom){
                         creep.drop(RESOURCE_ENERGY);
-                    }else{
+                    }
+                    else{
                         creep.moveTo(way);
                     }
                 }
@@ -35,7 +37,7 @@ var roleCarrier = {
                 var target = creep.pos.findClosestByRange(sources);
                 if(sources.length > 0){
                     if(creep.pickup(target) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target, {visualizePathStyle: {stroke: '#ffaa00'}});
+                        creep.moveTo(target);
                     }
                 }
             } 
