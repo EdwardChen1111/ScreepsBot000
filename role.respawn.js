@@ -12,22 +12,25 @@ var roleRespawn = {
         let linkID = Memory.creeps[name].linkID;
         let dospawn = false;
         let targets = '';
-
+        
         for (let name in Game.rooms) {
             targets = Game.rooms[name].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username == 'Invader')}});
             if (targets != '') {
                 Game.notify(Game.rooms[name].name , 0)
+                console.log(targets);
                 break;    
             }
         }
+        
         if (!Game.creeps[name]) {
             if (type == 'harvester') {
                 dospawn = true;
-            } else if (type == 'worker') {
+            } 
+            else if (type == 'worker') {
                 dospawn = true;
-                if(name == 'E11S35_Worker'){
-                    type = 'outG';
-                }
+            }
+            else if (type == 'soldier') {
+                dospawn = true;
             }
             if (targets == '') { 
                 if(flagA != undefined){
@@ -35,9 +38,6 @@ var roleRespawn = {
                         dospawn = true;
                     } 
                 }
-                if (type == 'soldier') {
-                    dospawn = true;
-                } 
                 if (type == 'builder') {
                     dospawn = true;
                 } 
@@ -49,11 +49,17 @@ var roleRespawn = {
                 } 
                 else if (type == 'outbuilder') {
                     dospawn = true;
-                } 
+                }                  
                 else if (type == 'claimer') {
                     dospawn = true;
-                }
+                }                              
                 else if (type == 'miner') {
+                    let mineral = Game.rooms[hroom].find(FIND_MINERALS, {filter: (mineral) => {return (mineral.mineralAmount > 0)}});
+                    if (mineral != ''){
+                        dospawn = true;
+                    }
+                }
+                else if (type == 'transfer') {
                     dospawn = true;
                 }
                 else if (type == 'outH') {
@@ -61,11 +67,12 @@ var roleRespawn = {
                 }
                 else if (type == 'outB') {
                     dospawn = true;
-                }
+                }                        
                 else if (type == 'outAll') {
-                    troom = 'E11S36';
                     dospawn = true;
-                    body = [WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE];
+                    if(name == 'test1' || name == 'test2'){
+                        dospawn = false;
+                    }
                 }
             } 
             else {
@@ -74,7 +81,7 @@ var roleRespawn = {
                 } 
             }
             if(dospawn){
-                if (Game.spawns[spawn].spawnCreep( body, name, { memory: { role: type ,body :body ,sourceID: sourceID ,troom: troom ,hroom: hroom, spawn: spawn,link: link,linkID: linkID} } ) == 0){
+                if (Game.spawns[spawn].spawnCreep(body,name,{memory:{role:type,body:body,sourceID:sourceID,troom:troom,hroom:hroom,spawn:spawn,link:link,linkID:linkID,moving:''}}) == 0){
                     console.log('Respawning non-existing creep memory:', name);
                 }
             }

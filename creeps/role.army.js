@@ -6,7 +6,6 @@ let roleArmy = {
             let room = spawn[0].memory.appendrange[name];
             targets = Game.rooms[room].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username == 'Invader')}});
             if (targets != '') {
-                console.log(targets);
                 break;    
             }
         }

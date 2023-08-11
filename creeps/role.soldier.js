@@ -2,14 +2,13 @@ let roleSoldier = {
     run: function (creep) {
         if (creep.memory.hroom == creep.room.name){
             let targets = [];
-            targets.push(...Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'EdwardChen1111')}}));
-            targets.push(...Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_STRUCTURES, {filter: (creep) => {return (creep.owner.username != 'EdwardChen1111')}}));
+            targets.push(...Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username == 'Invader')}}));
+            targets.push(...Game.rooms[creep.memory.hroom].find(FIND_HOSTILE_STRUCTURES, {filter: (creep) => {return (creep.owner.username == 'Invader')}}));
             if (targets != '') {
                 let clost = creep.pos.findClosestByRange(targets);
                 creep.moveTo(clost);
                 if (creep.pos.getRangeTo(clost) <= 3) {
                     creep.rangedAttack(clost);
-                    creep.rangedMassAttack();
                     creep.attack(clost);
                 }
             } 

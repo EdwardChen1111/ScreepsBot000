@@ -4,7 +4,6 @@ var roleTower = require('role.tower');
 var roleLink = require('role.link');
 
 //console.log(Game.cpu.bucket)
-
 module.exports.loop = function () {
     
     for(var name in Memory.creeps) {
@@ -27,5 +26,12 @@ module.exports.loop = function () {
     for(var name in Game.creeps) {
         var creep = Game.creeps[name];
         roleDowork.tell(creep);
+    }
+    
+    if(Game.cpu.bucket == 10000) {
+        if(Game.cpu.generatePixel() == 0){
+            Game.notify('Pixel!', 0)
+            console.log('Pixel!')
+        }
     }
 };

@@ -4,8 +4,10 @@ let BuyMarket = {
         const maxTransferEnergyCost = 500;
         const targetprice = 500;
         const resourceType = 'RESOURCE_GHODIUM';
-
+        
+        const SellOut = Game.market.getAllOrders({type: ORDER_SELL, resourceType})[0];
         const orders = Game.market.getAllOrders({type: ORDER_BUY, resourceType});
+        
 
         for(let i=0; i<orders.length; i++) {
 
