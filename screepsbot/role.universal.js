@@ -19,7 +19,7 @@ let roleUniversal = {
                 creep.memory.moving = true;
                 creep.memory.doing = 'h';
                 creep.memory.target = creep.memory.sourceID;
-            } else if (creep.memory.renew && spawn.store[RESOURCE_ENERGY] > 0) {
+            } else if (creep.memory.renew && spawn.store.getCapacity(RESOURCE_ENERGY) > 0) {
                 if (creep.ticksToLive > 1200) {
                     creep.memory.renew = false;
                 } else {
@@ -63,7 +63,7 @@ let roleUniversal = {
             let target = Game.getObjectById(creep.memory.target);
 
             if (doing == 'r') {
-                renew = roleRenew.renew(creep, spawn);
+                renew = roleRenew.renew(creep, target);
                 if (renew == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 } else if (renew == ERR_NOT_ENOUGH_ENERGY) {
@@ -84,6 +84,9 @@ let roleUniversal = {
                     creep.memory.moving = false;
                 }
             }
+
+            doing = creep.memory.doing;
+            target = Game.getObjectById(creep.memory.target);
 
             if (target != '' && ((doing == 'b' && creep.build(target) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) || (doing == 'u' && creep.upgradeController(target) == ERR_NOT_IN_RANGE))) {
                 creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
