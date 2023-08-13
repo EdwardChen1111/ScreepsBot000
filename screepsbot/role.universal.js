@@ -10,8 +10,46 @@ let roleUniversal = {
             creep.memory.doing = '';
             creep.memory.target = '';
         }
+        
+        if (creep.memory.moving) {
+            let doing = creep.memory.doing;
+            let target = Game.getObjectById(creep.memory.target);
 
-        if (creep.memory.hroom == creep.room.name) {
+            if (doing == 'r') {
+                renew = roleRenew.renew(creep, target);
+                if (renew == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target);
+                } else if (renew == ERR_NOT_ENOUGH_ENERGY) {
+                    if (freeC < Cap) {
+                        let clost = creep.pos.findClosestByRange(spawneng).id;
+                        creep.memory.doing = 't';
+                        creep.memory.target = clost;
+                    } else {
+                        creep.memory.doing = 'h';
+                        creep.memory.target = creep.memory.sourceID;
+                    }
+                }
+            }
+
+            if (doing == 'h') {
+                if (freeC > 0 && creep.harvest(target) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
+                } else if (freeC == 0) {
+                    creep.memory.moving = false;
+                }
+            }
+
+            doing = creep.memory.doing;
+            target = Game.getObjectById(creep.memory.target);
+
+            if (target != '' && ((doing == 'b' && creep.build(target) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) || (doing == 'u' && creep.upgradeController(target) == ERR_NOT_IN_RANGE))) {
+                creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
+            } else if (target == '' || (doing != 'h' && doing != 'r')){
+                creep.memory.moving = false;
+            }
+        }
+
+        if (creep.memory.hroom == creep.room.name && !creep.memory.moving) {
             if (creep.ticksToLive < 500 && !creep.memory.renew) {
                 creep.memory.renew = true;
             }
@@ -52,48 +90,10 @@ let roleUniversal = {
                     creep.memory.target = storage[0].id;
                 }
             }
-        } else {
+        } else if (creep.memory.hroom != creep.room.name) {
             const exitDir = creep.room.findExitTo(creep.memory.hroom);
             const exit = creep.pos.findClosestByRange(exitDir);
             creep.moveTo(exit);
-        }
-
-        if (creep.memory.moving) {
-            let doing = creep.memory.doing;
-            let target = Game.getObjectById(creep.memory.target);
-
-            if (doing == 'r') {
-                renew = roleRenew.renew(creep, target);
-                if (renew == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target);
-                } else if (renew == ERR_NOT_ENOUGH_ENERGY) {
-                    if (freeC < Cap) {
-                        let clost = creep.pos.findClosestByRange(spawneng).id;
-                        creep.memory.doing = 't';
-                        creep.memory.target = clost;
-                    } else {
-                        creep.memory.doing = 'h';
-                        creep.memory.target = creep.memory.sourceID;
-                    }
-                }
-            }
-
-            if (doing == 'h') {
-                if (freeC > 0 && creep.harvest(target) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
-                } else if (freeC == 0) {
-                    creep.memory.moving = false;
-                }
-            }
-
-            doing = creep.memory.doing;
-            target = Game.getObjectById(creep.memory.target);
-
-            if (target != '' && ((doing == 'b' && creep.build(target) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) || (doing == 'u' && creep.upgradeController(target) == ERR_NOT_IN_RANGE))) {
-                creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
-            } else if (target == '' || (doing != 'h' && doing != 'r')){
-                creep.memory.moving = false;
-            }
         }
     }
 };
