@@ -72,7 +72,8 @@ let roleUniversal = {
                         creep.memory.doing = 't';
                         creep.memory.target = clost;
                     } else {
-                        creep.memory.renew = false;
+                        creep.memory.doing = 'h';
+                        creep.memory.target = creep.memory.sourceID;
                     }
                 }
             }
