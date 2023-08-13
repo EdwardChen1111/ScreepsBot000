@@ -16,17 +16,22 @@ let roleUniversal = {
             let target = Game.getObjectById(creep.memory.target);
 
             if (doing == 'r') {
-                renew = roleRenew.renew(creep, target);
-                if (renew == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target);
-                } else if (renew == ERR_NOT_ENOUGH_ENERGY) {
-                    if (freeC < Cap) {
-                        let clost = creep.pos.findClosestByRange(spawneng).id;
-                        creep.memory.doing = 't';
-                        creep.memory.target = clost;
-                    } else {
-                        creep.memory.doing = 'h';
-                        creep.memory.target = creep.memory.sourceID;
+                if (creep.ticksToLive > 1200) {
+                    creep.memory.renew = false;
+                    creep.memory.moving = false;
+                } else {
+                    renew = roleRenew.renew(creep, target);
+                    if (renew == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(target);
+                    } else if (renew == ERR_NOT_ENOUGH_ENERGY) {
+                        if (freeC < Cap) {
+                            let clost = creep.pos.findClosestByRange(spawneng).id;
+                            creep.memory.doing = 't';
+                            creep.memory.target = clost;
+                        } else {
+                            creep.memory.doing = 'h';
+                            creep.memory.target = creep.memory.sourceID;
+                        }
                     }
                 }
             }
@@ -58,14 +63,10 @@ let roleUniversal = {
                 creep.memory.doing = 'h';
                 creep.memory.target = creep.memory.sourceID;
             } else if (creep.memory.renew && spawn[0].store.getCapacity(RESOURCE_ENERGY) > 0) {
-                if (creep.ticksToLive > 1200) {
-                    creep.memory.renew = false;
-                } else {
-                    let clost = creep.pos.findClosestByRange(spawn).id;
-                    creep.memory.moving = true;
-                    creep.memory.doing = 'r';
-                    creep.memory.target = clost;
-                }
+                let clost = creep.pos.findClosestByRange(spawn).id;
+                creep.memory.moving = true;
+                creep.memory.doing = 'r';
+                creep.memory.target = clost;
             } else {
                 if (spawneng != '') {
                     let clost = creep.pos.findClosestByRange(spawneng).id;
