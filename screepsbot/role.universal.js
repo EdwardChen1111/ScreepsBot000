@@ -19,7 +19,7 @@ let roleUniversal = {
                 creep.memory.moving = true;
                 creep.memory.doing = 'h';
                 creep.memory.target = creep.memory.sourceID;
-            } else if (creep.memory.renew && spawn.store.getCapacity(RESOURCE_ENERGY) > 0) {
+            } else if (creep.memory.renew && spawn[0].store.getCapacity(RESOURCE_ENERGY) > 0) {
                 if (creep.ticksToLive > 1200) {
                     creep.memory.renew = false;
                 } else {
