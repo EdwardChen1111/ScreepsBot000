@@ -11,7 +11,7 @@ let roleTower = {
             doct.sort((a,b) => a.hits - b.hits);
             tower.heal(doct[0]);
         } else if(fix != '') {
-            fix.sort((a,b) => a.hits - b.hits);
+            fix.sort((a,b) => (a.hits/a.hitsMax) - (b.hits/b.hitsMax));
             tower.repair(fix[0]);
         }
 	}
