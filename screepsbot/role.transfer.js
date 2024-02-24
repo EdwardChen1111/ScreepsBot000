@@ -1,10 +1,5 @@
 let roleTransfer = {
-    run: function (creep) {
-
-        let hroom = creep.memory.hroom;
-        let storage = creep.room.storage;
-        let terminal = creep.room.terminal;
-        let factory = Game.rooms[hroom].find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_FACTORY)}});
+    run: function (creep, storage, terminal) {
         let barformula = {
             L: RESOURCE_LEMERGIUM_BAR,
             H: RESOURCE_REDUCTANT,
@@ -15,7 +10,8 @@ let roleTransfer = {
             X: RESOURCE_PURIFIER,
             G: RESOURCE_GHODIUM_MELT,
         };
-        
+        let freeC = creep.store.getFreeCapacity();
+        let factory = Game.getObjectById(creep.memory.sourceID[1]);
         if (creep.memory.moving == '') {
             creep.memory.moving = false;
             creep.memory.doing = '';
@@ -24,7 +20,7 @@ let roleTransfer = {
         }
 
         if (!creep.memory.moving) {
-            if (creep.store.getFreeCapacity() == creep.store.getCapacity()) {
+            if (freeC == creep.store.getCapacity()) {
                 creep.memory.doing = 'w';
 
                 if (storage != '' && (factory.store[RESOURCE_ENERGY] < 3000 || terminal.store[RESOURCE_ENERGY] < 10000)) {

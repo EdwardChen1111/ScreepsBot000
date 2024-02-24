@@ -1,0 +1,18 @@
+Game.spawns[#spawnName].spawnCreep(
+    #bodypart(Array), 
+    #`${#roomname}_${#profession}00${#count}`, 
+    { 
+        memory: { 
+            role: #profession, 
+            sourceID: #targetid, 
+            troom: #toroom for out creeps, 
+            hroom: #homeroom for soldier and army, 
+            out: #not working(blank), 
+            spawn: #which it spawn, 
+            roomname: #usually is spawnroom, 
+            body: #bodypart(Array)
+        }
+    }
+)
+
+Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],'W7N3_Universal6',{memory:{role:'worker',sourceID:0, troom:'W7N3', hroom:'W7N3', out:'', spawn:'Spawn', roomname:'W7N3', body:['work','work','work','carry','carry','move','move','move']}});
