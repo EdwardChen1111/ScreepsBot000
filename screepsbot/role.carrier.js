@@ -29,7 +29,7 @@ let roleCarrier = {
                 let container = '';
                 if (creep.room.name == creep.memory.troom) {
                     dropresources = creep.room.find(FIND_DROPPED_RESOURCES);
-                    container = creep.room.find(FIND_STRUCTURES, {filter: (s) => (s.structureType == STRUCTURE_CONTAINER) && (s.getUsedCapacity >= creep.getFreeCapacity)});
+                    container = creep.room.find(FIND_STRUCTURES, {filter: (s) => (s.structureType == STRUCTURE_CONTAINER) && (s.store.getUsedCapacity() >= creep.store.getFreeCapacity())});
                 }
 
                 if (dropresources != '') {

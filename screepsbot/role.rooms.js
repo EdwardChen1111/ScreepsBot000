@@ -86,6 +86,7 @@ let roleRoom = {
                     targetsinvtow.push(...appendroom.find(FIND_HOSTILE_STRUCTURES, {filter: (object) => {return (object.owner.username == 'Invader')}}));
                 }
             }
+            //console.log(targetsinvtow)
         }
         
         if (targets != '') {

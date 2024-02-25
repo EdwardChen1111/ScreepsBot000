@@ -15,4 +15,5 @@ Game.spawns[#spawnName].spawnCreep(
     }
 )
 
-Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],'W7N3_Universal6',{memory:{role:'worker',sourceID:0, troom:'W7N3', hroom:'W7N3', out:'', spawn:'Spawn', roomname:'W7N3', body:['work','work','work','carry','carry','move','move','move']}});
+Game.spawns['Spawn1'].spawnCreep([CLAIM,CLAIM,MOVE,MOVE],'W7N3_Claimer_W7N4',{memory:{role:'claimer',sourceID:'ff7a07728e60965',troom:'W7N4', hroom:'W7N3', out:'', spawn:'Spawn1', roomname:'W7N4', body:['claim','claim','move','move'],standby:{x:26,y:26,roomName:'W7N4'}}});
+Game.spawns['Spawn1'].spawnCreep([CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],'W7N3_Carrier_W7N4_1',{memory:{role:'carrier',sourceID:0, troom:'W7N4', hroom:'W7N3', out:'', spawn:'Spawn1', roomname:'W7N3', body:['carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move'],moving:''}});
