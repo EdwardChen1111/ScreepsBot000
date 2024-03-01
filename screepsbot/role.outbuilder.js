@@ -1,6 +1,6 @@
 let roleOutbuilder = {
     run: function (creep) {
-        if (creep.room.name == creep.memory.troom){
+        if (creep.room.name == creep.memory.standby.roomName){
             if (creep.store.getFreeCapacity() == creep.store.getCapacity()) {
                 let resources = creep.room.find(FIND_DROPPED_RESOURCES);
                 let container = creep.room.find(FIND_STRUCTURES, {filter: (s) => (s.structureType == STRUCTURE_CONTAINER) && (s.store.getUsedCapacity() >= creep.store.getFreeCapacity())});
@@ -34,7 +34,7 @@ let roleOutbuilder = {
                 }
             }
         } else {
-            const exitDir = creep.room.findExitTo(creep.memory.troom);
+            const exitDir = creep.room.findExitTo(creep.memory.standby.roomName);
             const exit = creep.pos.findClosestByRange(exitDir);
             creep.moveTo(exit);
         }

@@ -2,10 +2,11 @@ let roleRespawn = require('role.respawn');
 let roleSpawningtxt = require('role.spawningtxt');
 let roleDowork = require('role.dowork');
 let roleTower = require('role.tower');
+let roleLink = require('role.link');
 
 let roleRoom = {
     run: function (room, roomname, username) {
-        let spawn = '', alltower = '', storage = '', terminal = '', bui = '', spawneng = '', towereng = '', targets = [], targetsinvtow = [];
+        let spawn = '', alltower = '', storage = '', terminal = '', bui = '', spawneng = '', towereng = '', targets = [], targetsinvtow = [], linkid = '', take_over_link = '';
         let controllertime = room.controller.ticksToDowngrade;
         let resources = room.find(FIND_DROPPED_RESOURCES, {filter: (resources) => {return (resources.resourceType == RESOURCE_ENERGY)}});
         spawn = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_SPAWN)}});
@@ -19,6 +20,7 @@ let roleRoom = {
                 storage = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
                 alltower = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER});
                 spawns = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN)}});
+                linkid = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_LINK});
                 terminal = room.terminal;
 
                 if (controllertime > 5000) {
@@ -31,12 +33,13 @@ let roleRoom = {
                 spawn[0].memory.storage = storage.map(storage => storage.id);
                 spawn[0].memory.alltower = alltower.map(alltower => alltower.id);
                 spawn[0].memory.spawnengid = spawns.map(spawns => spawns.id);
+                spawn[0].memory.linkid = linkid.map(links => links.id);
                 if (terminal != undefined) {
                     spawn[0].memory.terminal = room.terminal.id;
                 }
             } else if (spawn[0].memory.uptime > 0){
                 spawn[0].memory.uptime--;
-                
+
                 if (spawn[0].memory.bui != '') {
                     bui = spawn[0].memory.bui;
 
@@ -58,7 +61,12 @@ let roleRoom = {
                 if (spawn[0].memory.terminal != '') {
                     terminal = Game.getObjectById(spawn[0].memory.terminal);
                 }
-                
+                if (spawn[0].memory.linkid != '') {
+                    linkid = spawn[0].memory.linkid.map(id => Game.getObjectById(id));
+                }
+                if (spawn[0].memory.take_over_link_id != '') {
+                    take_over_link = Game.getObjectById(spawn[0].memory.take_over_link_id);
+                }
                 spawneng = spawn[0].memory.spawnengid.map(id => Game.getObjectById(id)).filter(function (structure) {
                     return structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
                 });
@@ -103,10 +111,17 @@ let roleRoom = {
             roleSpawningtxt.show(spawn[spawnname].name);
         }
         
+        if (linkid != '' && take_over_link != ''){
+            for (let num in linkid) {
+                let link = linkid[num];
+                roleLink.work(link, take_over_link);
+            }
+        }
+        
         for (let name in Game.creeps) {
             let creep = Game.creeps[name];
             if (creep.memory.roomname == roomname){
-                roleDowork.tell(creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn, terminal);
+                roleDowork.tell(creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn, terminal, take_over_link);
             }
         }
         
@@ -114,6 +129,7 @@ let roleRoom = {
             let tower = alltower[num];
             roleTower.work(tower);
         }
+
     }
 }
 module.exports = roleRoom;

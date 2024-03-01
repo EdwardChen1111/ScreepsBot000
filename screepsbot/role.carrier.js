@@ -27,7 +27,8 @@ let roleCarrier = {
             if (freeC > 0) {
                 let dropresources = '';
                 let container = '';
-                if (creep.room.name == creep.memory.troom) {
+                
+                if (creep.room.name == creep.memory.standby.roomName) {
                     dropresources = creep.room.find(FIND_DROPPED_RESOURCES);
                     container = creep.room.find(FIND_STRUCTURES, {filter: (s) => (s.structureType == STRUCTURE_CONTAINER) && (s.store.getUsedCapacity() >= creep.store.getFreeCapacity())});
                 }
@@ -42,6 +43,12 @@ let roleCarrier = {
                     creep.memory.doing = 's';
                 }
 
+                creep.memory.moving = true;
+
+            //linkID
+            } else if (sourceID != '') {
+                creep.memory.target = sourceID;
+                creep.memory.doing = 't';
                 creep.memory.moving = true;
             } else if (storage != '') {
                 creep.memory.target = storage[0].id;

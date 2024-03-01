@@ -11,7 +11,7 @@ let roleTransfer = {
             G: RESOURCE_GHODIUM_MELT,
         };
         let freeC = creep.store.getFreeCapacity();
-        let factory = Game.getObjectById(creep.memory.sourceID[1]);
+        let factory = Game.getObjectById(creep.memory.sourceID);
         if (creep.memory.moving == '') {
             creep.memory.moving = false;
             creep.memory.doing = '';

@@ -1,26 +1,54 @@
 let roleHarvester = {
-    run: function (creep, resources, bigresources, spawneng, towereng, storage, terminal) {
+    run: function (creep, resources, bigresources, spawneng, towereng, storage, terminal, take_over_link) {
         let freeC = creep.store.getFreeCapacity();
+        
+        if (creep.memory.link == undefined || creep.memory.link == true) {
+            creep.memory.link = false;
+        }
+        
         if (creep.memory.moving == '') {
             creep.memory.moving = false;
             creep.memory.doing = '';
             creep.memory.target = '';
         }
-
+        
+        if (take_over_link != '' && take_over_link != undefined){
+            creep.memory.link = true;
+        }
         if (!creep.memory.moving) {
             if (freeC == creep.store.getCapacity()) {
-                if (bigresources != '') {
-                    creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
-                    creep.memory.doing = 'p';
-                    creep.memory.moving = true;
-                } else if (storage != '' && (spawneng != '' || towereng != '')) {
-                    creep.memory.target = storage[0].id;
-                    creep.memory.doing = 'w';
-                    creep.memory.moving = true;
-                } else if (resources != '') {
-                    creep.memory.target = creep.pos.findClosestByRange(resources).id;
-                    creep.memory.doing = 'p';
-                    creep.memory.moving = true;
+                if (creep.memory.link){
+                    if (take_over_link.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
+                        creep.memory.target = take_over_link.id;
+                        creep.memory.doing = 'w';
+                        creep.memory.moving = true;
+                    } else if (bigresources != '') {
+                        creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
+                        creep.memory.doing = 'p';
+                        creep.memory.moving = true;
+                    } else if (storage != '' && (spawneng != '' || towereng != '')) {
+                        creep.memory.target = storage[0].id;
+                        creep.memory.doing = 'w';
+                        creep.memory.moving = true;
+                    } else if (resources != '') {
+                        creep.memory.target = creep.pos.findClosestByRange(resources).id;
+                        creep.memory.doing = 'p';
+                        creep.memory.moving = true;
+                    }
+                } else {
+                    if (bigresources != '') {
+                        creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
+                        creep.memory.doing = 'p';
+                        creep.memory.moving = true;
+                    } else if (storage != '' && (spawneng != '' || towereng != '')) {
+                        creep.memory.target = storage[0].id;
+                        creep.memory.doing = 'w';
+                        creep.memory.moving = true;
+                    } else if (resources != '') {
+                        creep.memory.target = creep.pos.findClosestByRange(resources).id;
+                        creep.memory.doing = 'p';
+                        creep.memory.moving = true;
+                    }
                 }
             } else {
                 if (spawneng != '') {

@@ -4,12 +4,11 @@ let roleRespawn = {
         let type = memory.role;
         let body = memory.body;
         let sourceId = memory.sourceID;
-        let troom = memory.troom;
+        //let troom = memory.troom;
         let hroom = memory.hroom;
-        let out = memory.out;
         let spawn = memory.spawn;
         let room = memory.roomname;
-        let standby = new RoomPosition(24, 24, memory.troom);
+        let standby = new RoomPosition(24, 24, memory.standby.roomName);
         let dospawn = false;
         let waring = ['worker', 'harvester'];
         let normal = ['builder', 'outworker', 'carrier', 'outbuilder', 'claimer', 'miner', 'transfer' , 'universal'];
@@ -37,7 +36,7 @@ let roleRespawn = {
         } 
             
         if (dospawn) {
-            if (Game.spawns[spawn].spawnCreep( body, name, { memory: { role: type, sourceID: sourceId, troom: troom, hroom: hroom, out: out, spawn: spawn, roomname: room, standby: standby, body: body}}) == 0){
+            if (Game.spawns[spawn].spawnCreep( body, name, { memory: { role: type, sourceID: sourceId, troom: troom, hroom: hroom, spawn: spawn, roomname: room, standby: standby, body: body}}) == 0){
                 console.log('Respawning non-existing creep memory:', name);
             }
         }

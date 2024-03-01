@@ -5,7 +5,6 @@ Game.spawns[#spawnName].spawnCreep(
         memory: { 
             role: #profession, 
             sourceID: #targetid, 
-            troom: #toroom for out creeps, 
             hroom: #homeroom for soldier and army, 
             out: #not working(blank), 
             spawn: #which it spawn, 
@@ -15,5 +14,15 @@ Game.spawns[#spawnName].spawnCreep(
     }
 )
 
-Game.spawns['Spawn1'].spawnCreep([CLAIM,CLAIM,MOVE,MOVE],'W7N3_Claimer_W7N4',{memory:{role:'claimer',sourceID:'ff7a07728e60965',troom:'W7N4', hroom:'W7N3', out:'', spawn:'Spawn1', roomname:'W7N4', body:['claim','claim','move','move'],standby:{x:26,y:26,roomName:'W7N4'}}});
-Game.spawns['Spawn1'].spawnCreep([CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],'W7N3_Carrier_W7N4_1',{memory:{role:'carrier',sourceID:0, troom:'W7N4', hroom:'W7N3', out:'', spawn:'Spawn1', roomname:'W7N3', body:['carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move','carry','move'],moving:''}});
+role.transfer -> sourceID = factory
+role.worker -> sourceID = energy
+role.universal -> sourceID = energy
+role.carrir -> sourceID = link
+role.claimer -> sourceID = controller
+role.miner -> sourceID = mineral
+role.outworker -> sourceID = energy
+
+
+Game.spawns['W23S54_1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],'W22S56_Universal_1',{memory:{role:'universal',sourceID:'5bbcaba99099fc012e634139',troom:'W23S54',hroom:'W23S54',spawn:'W23S54_1', roomname:'W23S54', standby:{x:24,y:24,roomName:'W23S54'},body:['work','work','work','work','carry','carry','carry','carry','move','move','move','move'],moving:''}});
+
+Game.spawns[''].spawnCreep([],'',{memory:{role:'',sourceID:'',hroom:'',spawn:'', roomname:'', standby:{x:,y:,roomName:''},body:[],moving:''}});

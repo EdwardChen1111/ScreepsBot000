@@ -1,6 +1,6 @@
 let roleOutworker = {
     run: function (creep) {
-        if (creep.room.name == creep.memory.troom){
+        if (creep.room.name == creep.memory.standby.roomName){
             if (creep.store.getUsedCapacity() == creep.store.getCapacity()){
                 let container = creep.room.find(FIND_STRUCTURES, {filter: (s) => (s.structureType == STRUCTURE_CONTAINER)});
                 if (creep.transfer(creep.pos.findClosestByRange(container), RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
