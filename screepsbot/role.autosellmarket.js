@@ -19,7 +19,7 @@ let AutoSellMarket = {
                     } else {
                         Game.market.deal(all_orders[0].id, terminal.store.getUsedCapacity(MineralType), room);
                     }
-                    console.log(`💸 ${room} using "${MineralType}" is now trading with ${all_orders[0].roomName} and earn ${(all_orders[0].price)*(trade_amount)} Cr`);
+                    console.log(`💸 ${room} using [ ${MineralType} ] is now trading with ${all_orders[0].roomName} and earn ${(all_orders[0].price)*(trade_amount)} Cr`);
                 }
             }
         }
