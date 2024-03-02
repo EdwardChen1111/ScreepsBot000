@@ -23,6 +23,4 @@ role.miner -> sourceID = mineral
 role.outworker -> sourceID = energy
 
 
-Game.spawns['W23S54_1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],'W22S56_Universal_1',{memory:{role:'universal',sourceID:'5bbcaba99099fc012e634139',troom:'W23S54',hroom:'W23S54',spawn:'W23S54_1', roomname:'W23S54', standby:{x:24,y:24,roomName:'W23S54'},body:['work','work','work','work','carry','carry','carry','carry','move','move','move','move'],moving:''}});
-
 Game.spawns[''].spawnCreep([],'',{memory:{role:'',sourceID:'',hroom:'',spawn:'', roomname:'', standby:{x:,y:,roomName:''},body:[],moving:''}});

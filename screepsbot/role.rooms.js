@@ -1,12 +1,14 @@
 let roleRespawn = require('role.respawn');
 let roleSpawningtxt = require('role.spawningtxt');
+let roleUpdatingtxt = require('role.updatingtxt');
 let roleDowork = require('role.dowork');
 let roleTower = require('role.tower');
 let roleLink = require('role.link');
+let roleAutoSellMarket = require('role.autosellmarket');
 
 let roleRoom = {
     run: function (room, roomname, username) {
-        let spawn = '', alltower = '', storage = '', terminal = '', bui = '', spawneng = '', towereng = '', targets = [], targetsinvtow = [], linkid = '', take_over_link = '';
+        let spawn = '', alltower = '', storage = '', terminal = '', bui = '', spawneng = '', towereng = '', targets = [], targetsinvtow = [], linkid = '', take_over_link = '', mineral = '';
         let controllertime = room.controller.ticksToDowngrade;
         let resources = room.find(FIND_DROPPED_RESOURCES, {filter: (resources) => {return (resources.resourceType == RESOURCE_ENERGY)}});
         spawn = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_SPAWN)}});
@@ -17,10 +19,14 @@ let roleRoom = {
         if (spawn != '') {
             if (spawn[0].memory.uptime == undefined || spawn[0].memory.uptime == 0) {
                 spawn[0].memory.uptime = 20;
+
+                roleUpdatingtxt.update(spawn[0].name);
+
                 storage = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
                 alltower = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER});
                 spawns = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN)}});
                 linkid = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_LINK});
+                mineral = room.find(FIND_MINERALS);
                 terminal = room.terminal;
 
                 if (controllertime > 5000) {
@@ -36,6 +42,7 @@ let roleRoom = {
                 spawn[0].memory.linkid = linkid.map(links => links.id);
                 if (terminal != undefined) {
                     spawn[0].memory.terminal = room.terminal.id;
+                    roleAutoSellMarket(room,room.terminal,mineral)
                 }
             } else if (spawn[0].memory.uptime > 0){
                 spawn[0].memory.uptime--;

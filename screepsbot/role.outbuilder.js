@@ -14,7 +14,7 @@ let roleOutbuilder = {
                         creep.moveTo(creep.pos.findClosestByRange(container), {reusePath: 10});
                     }
                 } else {
-                    let way = new RoomPosition(24, 24, creep.memory.troom);
+                    let way = new RoomPosition(24, 24, creep.memory.standby.roomName);
                     creep.moveTo(way, {reusePath: 10});
                 }
             } else {
