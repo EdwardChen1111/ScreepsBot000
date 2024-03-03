@@ -1,7 +1,7 @@
 let roleCarrier = {
     run: function (creep, storage) {
         let freeC = creep.store.getFreeCapacity();
-        if (creep.memory.moving == '') {
+        if (creep.memory.moving == '' || creep.memory.moving == undefined) {
             creep.memory.moving = false;
             creep.memory.doing = '';
             creep.memory.target = '';

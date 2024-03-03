@@ -14,14 +14,14 @@ let roleTransfer = require('role.transfer');
 let rolePerClaim = require('role.per_claim');
 
 let roleDoWork = {
-    tell: function (creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn, terminal, take_over_link) {
+    tell: function (creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn, terminal, take_over_link, died_resource) {
         role = creep.memory.role;
         if (role == 'worker') {
             roleWorker.run(creep);
         } else if (role == 'builder') {
             roleBuilder.run(creep, bui, controllertime, storage);
         } else if (role == 'harvester') {
-            roleHarvester.run(creep, resources, bigresources, spawneng, towereng, storage, terminal, take_over_link);
+            roleHarvester.run(creep, resources, bigresources, spawneng, towereng, storage, terminal, take_over_link, died_resource);
         } else if (role == 'carrier') {
             roleCarrier.run(creep, storage);
         } else if (role == 'outworker') {
@@ -41,7 +41,7 @@ let roleDoWork = {
         } else if (role == 'miner') {
             roleMiner.run(creep, terminal);
         } else if (role == 'transfer') {
-            roleTransfer.run(creep, storage, terminal);
+            roleTransfer.run(creep, storage, terminal, died_resource);
         } else if (role == 'perclaim') {
             rolePerClaim.run(creep);
         }

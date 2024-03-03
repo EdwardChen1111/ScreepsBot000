@@ -1,12 +1,16 @@
 let roleHarvester = {
-    run: function (creep, resources, bigresources, spawneng, towereng, storage, terminal, take_over_link) {
+    run: function (creep, resources, bigresources, spawneng, towereng, storage, terminal, take_over_link, died_resource) {
         let freeC = creep.store.getFreeCapacity();
-        
+        died_resource = died_resource.filter(function (object) {
+            return object.store.getUsedCapacity(RESOURCE_ENERGY) > 500;
+        });
+
+
         if (creep.memory.link == undefined || creep.memory.link == true) {
             creep.memory.link = false;
         }
         
-        if (creep.memory.moving == '') {
+        if (creep.memory.moving == '' || creep.memory.moving == undefined) {
             creep.memory.moving = false;
             creep.memory.doing = '';
             creep.memory.target = '';
@@ -20,6 +24,10 @@ let roleHarvester = {
                 if (creep.memory.link){
                     if (take_over_link.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
                         creep.memory.target = take_over_link.id;
+                        creep.memory.doing = 'w';
+                        creep.memory.moving = true;
+                    } else if (died_resource != '') {
+                        creep.memory.target = creep.pos.findClosestByRange(died_resource).id;
                         creep.memory.doing = 'w';
                         creep.memory.moving = true;
                     } else if (bigresources != '') {
@@ -36,7 +44,11 @@ let roleHarvester = {
                         creep.memory.moving = true;
                     }
                 } else {
-                    if (bigresources != '') {
+                    if (died_resource != '') {
+                        creep.memory.target = creep.pos.findClosestByRange(died_resource).id;
+                        creep.memory.doing = 'w';
+                        creep.memory.moving = true;
+                    } else if (bigresources != '') {
                         creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
                         creep.memory.doing = 'p';
                         creep.memory.moving = true;

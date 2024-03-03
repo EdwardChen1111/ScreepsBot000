@@ -1,5 +1,5 @@
 let roleTransfer = {
-    run: function (creep, storage, terminal) {
+    run: function (creep, storage, terminal, died_resource) {
         let barformula = {
             L: RESOURCE_LEMERGIUM_BAR,
             H: RESOURCE_REDUCTANT,
@@ -10,9 +10,15 @@ let roleTransfer = {
             X: RESOURCE_PURIFIER,
             G: RESOURCE_GHODIUM_MELT,
         };
+
         let freeC = creep.store.getFreeCapacity();
         let factory = Game.getObjectById(creep.memory.sourceID);
-        if (creep.memory.moving == '') {
+        died_resource = died_resource.filter(function (object) {
+            return object.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+        });
+        died_resource = creep.pos.findClosestByRange(died_resource);
+
+        if (creep.memory.moving == '' || creep.memory.moving == undefined) {
             creep.memory.moving = false;
             creep.memory.doing = '';
             creep.memory.target = '';
@@ -20,29 +26,42 @@ let roleTransfer = {
         }
 
         if (!creep.memory.moving) {
-            if (freeC == creep.store.getCapacity()) {
+            if (freeC < creep.store.getCapacity()/2) {
                 creep.memory.doing = 'w';
 
                 if (storage != '' && (factory.store[RESOURCE_ENERGY] < 3000 || terminal.store[RESOURCE_ENERGY] < 10000)) {
                     creep.memory.target = storage[0].id;
                     creep.memory.nt = RESOURCE_ENERGY;
                     creep.memory.moving = true;
-                } else if (terminal != '' && (terminal.store.getUsedCapacity() - terminal.store[RESOURCE_ENERGY]) > 500) {
-                    for (let st in terminal.store) {
-                        if (st != 'energy' && barformula[st] != undefined && terminal.store[st] > 500) {
-                            creep.memory.target = terminal.id;
+                }else if (died_resource != '') {
+                    creep.memory.target = died_resource.id;
+                    for (let st in died_resource.store) {
+                        if (st != 'energy') {
                             creep.memory.nt = st;
                             creep.memory.moving = true;
                             break;
                         }
                     }
-                    if (!creep.memory.moving && factory != '' && (factory.store.getUsedCapacity() - factory.store[RESOURCE_ENERGY]) > 0) {
-                        for (let st in factory.store) {
-                            if (st != 'energy' && barformula[st] == undefined) {
-                                creep.memory.target = factory.id;
+                    creep.memory.nt = RESOURCE_ENERGY;
+                    creep.memory.moving = true;
+                } else if (terminal != '') {
+                    if ((terminal.store.getUsedCapacity() - terminal.store.getUsedCapacity(RESOURCE_ENERGY)) > 500) {
+                        for (let st in terminal.store) {
+                            if (st != 'energy' && barformula[st] != undefined && terminal.store[st] > 500) {
+                                creep.memory.target = terminal.id;
                                 creep.memory.nt = st;
                                 creep.memory.moving = true;
                                 break;
+                            }
+                        }
+                        if (!creep.memory.moving && factory != '' && (factory.store.getUsedCapacity() - factory.store[RESOURCE_ENERGY]) > 0) {
+                            for (let st in factory.store) {
+                                if (st != 'energy' && barformula[st] == undefined) {
+                                    creep.memory.target = factory.id;
+                                    creep.memory.nt = st;
+                                    creep.memory.moving = true;
+                                    break;
+                                }
                             }
                         }
                     }

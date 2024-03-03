@@ -8,14 +8,16 @@ let roleAutoSellMarket = require('role.autosellmarket');
 
 let roleRoom = {
     run: function (room, roomname, username) {
-        let spawn = '', alltower = '', storage = '', terminal = '', bui = '', spawneng = '', towereng = '', targets = [], targetsinvtow = [], linkid = '', take_over_link = '', mineral = '';
+        let spawn = '', alltower = '', storage = '', terminal = '', bui = '', spawneng = '', towereng = '', targets = [], targetsinvtow = [], linkid = '', take_over_link = '', mineral = '', ruin = '', tombstone = '';
         let controllertime = room.controller.ticksToDowngrade;
         let resources = room.find(FIND_DROPPED_RESOURCES, {filter: (resources) => {return (resources.resourceType == RESOURCE_ENERGY)}});
         spawn = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_SPAWN)}});
         let bigresources = resources.filter(function (object) {
             return object.amount > 500;
         });
-        
+        tombstone = room.find(FIND_TOMBSTONES, {filter: (t) => {return (t.store.getUsedCapacity() > 0)}});
+        ruin = room.find(FIND_RUINS, {filter: (r) => {return (r.store.getUsedCapacity() > 0)}});
+        let died_resource = ruin.concat(tombstone);
         if (spawn != '') {
             if (spawn[0].memory.uptime == undefined || spawn[0].memory.uptime == 0) {
                 spawn[0].memory.uptime = 20;
@@ -40,9 +42,9 @@ let roleRoom = {
                 spawn[0].memory.alltower = alltower.map(alltower => alltower.id);
                 spawn[0].memory.spawnengid = spawns.map(spawns => spawns.id);
                 spawn[0].memory.linkid = linkid.map(links => links.id);
-                if (terminal != undefined) {
+                if (terminal != undefined && terminal.owner == username) {
                     spawn[0].memory.terminal = room.terminal.id;
-                    roleAutoSellMarket(room,room.terminal,mineral)
+                    roleAutoSellMarket.deal(room,room.terminal,mineral)
                 }
             } else if (spawn[0].memory.uptime > 0){
                 spawn[0].memory.uptime--;
@@ -71,7 +73,7 @@ let roleRoom = {
                 if (spawn[0].memory.linkid != '') {
                     linkid = spawn[0].memory.linkid.map(id => Game.getObjectById(id));
                 }
-                if (spawn[0].memory.take_over_link_id != '') {
+                if (spawn[0].memory.take_over_link_id != '' && spawn[0].memory.take_over_link_id != undefined) {
                     take_over_link = Game.getObjectById(spawn[0].memory.take_over_link_id);
                 }
                 spawneng = spawn[0].memory.spawnengid.map(id => Game.getObjectById(id)).filter(function (structure) {
@@ -128,7 +130,7 @@ let roleRoom = {
         for (let name in Game.creeps) {
             let creep = Game.creeps[name];
             if (creep.memory.roomname == roomname){
-                roleDowork.tell(creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn, terminal, take_over_link);
+                roleDowork.tell(creep, resources, bigresources, controllertime, bui, spawneng, towereng, targets, storage, spawn, terminal, take_over_link, died_resource);
             }
         }
         
