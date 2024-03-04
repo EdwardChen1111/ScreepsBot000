@@ -21,7 +21,7 @@ let roleRoom = {
         if (spawn != '') {
             if (spawn[0].memory.uptime == undefined || spawn[0].memory.uptime == 0) {
                 spawn[0].memory.uptime = 20;
-
+                
                 roleUpdatingtxt.update(spawn[0].name);
 
                 storage = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
@@ -42,10 +42,15 @@ let roleRoom = {
                 spawn[0].memory.alltower = alltower.map(alltower => alltower.id);
                 spawn[0].memory.spawnengid = spawns.map(spawns => spawns.id);
                 spawn[0].memory.linkid = linkid.map(links => links.id);
-                if (terminal != undefined && terminal.owner == username) {
+                if (terminal != undefined && terminal.owner.username == username) {
                     spawn[0].memory.terminal = room.terminal.id;
-                    roleAutoSellMarket.deal(room,room.terminal,mineral)
+                    spawn[0].memory.tradetime --;
+                    if (spawn[0].memory.tradetime == undefined || spawn[0].memory.tradetime == 0) {
+                        spawn[0].memory.tradetime = 10;
+                        roleAutoSellMarket.deal(room,room.terminal,mineral);
+                    }
                 }
+                
             } else if (spawn[0].memory.uptime > 0){
                 spawn[0].memory.uptime--;
 

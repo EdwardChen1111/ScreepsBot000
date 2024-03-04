@@ -9,14 +9,14 @@ module.exports.loop = function () {
             roleRooms.run(room, name, username);
         }
     }
-/*
+
     if(Game.cpu.bucket == 10000) {
         if(Game.cpu.generatePixel() == 0){
             Game.notify('Pixel!', 0)
             console.log('Pixel!')
         }
     }
-*/
+
     if (Game.cpu.getUsed() > 16) {
         console.log(`This tick use ${parseInt(Math.round(Game.cpu.getUsed()))} CPU`);
     }
