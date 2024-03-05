@@ -47,7 +47,7 @@ let roleRoom = {
                     spawn[0].memory.tradetime --;
                     if (spawn[0].memory.tradetime == undefined || spawn[0].memory.tradetime == 0) {
                         spawn[0].memory.tradetime = 10;
-                        roleAutoSellMarket.deal(room,room.terminal,mineral);
+                        roleAutoSellMarket.deal(room,room.terminal,mineral,spawn[0].name);
                     }
                 }
                 
