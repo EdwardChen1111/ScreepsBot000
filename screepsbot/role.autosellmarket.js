@@ -1,6 +1,8 @@
+let roleTradingtxt = require('role.tradingtxt');
+
 let AutoSellMarket = {
     deal: function (room,terminal,mineral) {
-        let all_orders = '', distance = '', trade_amount = '', history = '', need_price = '';
+        let all_orders = '', distance = '', trade_amount = '', history = '', need_price = '', answer = '';
         
         let formula = {
             L: RESOURCE_LEMERGIUM,
@@ -26,13 +28,18 @@ let AutoSellMarket = {
                 need_price = history.avgPrice + (history.stddevPrice)*0.5;
 
                 if (all_orders[0].price > need_price){
-                    if (terminal.store.getUsedCapacity(MineralType) > trade_amount){
+                    if (all_orders[0].amount > trade_amount){
                         Game.market.deal(all_orders[0].id, trade_amount, room);
+                        answer = `successfully and earn ${(all_orders[0].price)*(trade_amount)}`;
                     } else {
                         Game.market.deal(all_orders[0].id, terminal.store.getUsedCapacity(MineralType), room);
+                        answer = `successfully and earn ${(all_orders[0].price)*(all_orders[0].amount)}`;
                     }
-                    console.log(`💸 ${room} using [ ${MineralType} ] is now trading with ${all_orders[0].roomName} and earn ${(all_orders[0].price)*(trade_amount)} Cr`);
+                    console.log(`💸 ${room} using [ ${MineralType} ] is now trading with ${all_orders[0].roomName} {answer}`);
+                }else{
+                    answer = 'Bad price';
                 }
+                roleTradingtxt.answer(room,all_orders[0].roomName,answer)
             }
         }
 	}

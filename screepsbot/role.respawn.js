@@ -30,9 +30,12 @@ let roleRespawn = {
             if (type == 'soldier') {
                 dospawn = true;
                 hroom = targetsinvtow[0].room.name;
-                troom = targetsinvtow[0].room.name;
+                standby.roomName = targetsinvtow[0].room.name;
             }
         } 
+        if (name == ' W23S54_Builder_2'){
+            dospawn = false;
+        }
             
         if (dospawn) {
             if (Game.spawns[spawn].spawnCreep( body, name, { memory: { role: type, sourceID: sourceId, hroom: hroom, spawn: spawn, roomname: room, standby: standby, body: body}}) == 0){

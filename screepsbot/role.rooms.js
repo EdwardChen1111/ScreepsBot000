@@ -21,8 +21,8 @@ let roleRoom = {
         if (spawn != '') {
             if (spawn[0].memory.uptime == undefined || spawn[0].memory.uptime == 0) {
                 spawn[0].memory.uptime = 20;
-                
-                roleUpdatingtxt.update(spawn[0].name);
+
+                roleUpdatingtxt.update(spawn[0].name, spawn[0].memory.tradetime);
 
                 storage = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_STORAGE)}});
                 alltower = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER});
