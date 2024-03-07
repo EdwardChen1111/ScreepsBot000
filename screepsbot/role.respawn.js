@@ -42,7 +42,7 @@ let roleRespawn = {
                 
             if (dospawn) {
                 if (Game.spawns[spawn].spawnCreep( body, name, { memory: { role: type, sourceID: sourceId, hroom: hroom, spawn: spawn, roomname: room, standby: standby, body: body}}) == 0){
-                    console.log('Respawning non-existing creep memory:', name);
+                    console.log('🛠️ Respawning non-existing creep memory:', name);
                 }
             }
         }else{
