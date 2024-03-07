@@ -25,60 +25,60 @@ let roleHarvester = {
                     if (take_over_link.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
                         creep.memory.target = take_over_link.id;
                         creep.memory.doing = 'w';
-                        creep.memory.moving = 10;
+                        creep.memory.moving = 5;
                     } else if (died_resource != '') {
                         creep.memory.target = creep.pos.findClosestByRange(died_resource).id;
                         creep.memory.doing = 'w';
-                        creep.memory.moving = 10;
+                        creep.memory.moving = 5;
                     } else if (bigresources != '') {
                         creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
                         creep.memory.doing = 'p';
-                        creep.memory.moving = 10;
+                        creep.memory.moving = 5;
                     } else if (storage != '' && (spawneng != '' || towereng != '')) {
                         creep.memory.target = storage[0].id;
                         creep.memory.doing = 'w';
-                        creep.memory.moving = 10;
+                        creep.memory.moving = 5;
                     } else if (resources != '') {
                         creep.memory.target = creep.pos.findClosestByRange(resources).id;
                         creep.memory.doing = 'p';
-                        creep.memory.moving = 10;
+                        creep.memory.moving = 5;
                     }
                 } else {
                     if (died_resource != '') {
                         creep.memory.target = creep.pos.findClosestByRange(died_resource).id;
                         creep.memory.doing = 'w';
-                        creep.memory.moving = 10;
+                        creep.memory.moving = 5;
                     } else if (bigresources != '') {
                         creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
                         creep.memory.doing = 'p';
-                        creep.memory.moving = 10;
+                        creep.memory.moving = 5;
                     } else if (storage != '' && (spawneng != '' || towereng != '')) {
                         creep.memory.target = storage[0].id;
                         creep.memory.doing = 'w';
-                        creep.memory.moving = 10;
+                        creep.memory.moving = 5;
                     } else if (resources != '') {
                         creep.memory.target = creep.pos.findClosestByRange(resources).id;
                         creep.memory.doing = 'p';
-                        creep.memory.moving = 10;
+                        creep.memory.moving = 5;
                     }
                 }
             } else {
                 if (spawneng != '') {
                     creep.memory.target = creep.pos.findClosestByRange(spawneng).id;
                     creep.memory.doing = 't';
-                    creep.memory.moving = 10;
+                    creep.memory.moving = 5;
                 } else if (towereng != '') {
                     creep.memory.target = creep.pos.findClosestByRange(towereng).id;
                     creep.memory.doing = 't';
-                    creep.memory.moving = 10;
-                } else if (terminal != undefined && Memory.creeps[`${creep.room.name}_Transfer000`] == undefined && terminal.store[RESOURCE_ENERGY] < 50000) {
+                    creep.memory.moving = 5;
+                } else if (terminal != undefined && Memory.creeps[`${creep.room.name}_Transfer000`] == undefined && terminal.store[RESOURCE_ENERGY] < 30000) {
                     creep.memory.target = terminal.id;
                     creep.memory.doing = 't';
-                    creep.memory.moving = 10;
+                    creep.memory.moving = 5;
                 } else if (storage != '' && resources != '') {
                     creep.memory.target = storage[0].id;
                     creep.memory.doing = 't';
-                    creep.memory.moving = 10;
+                    creep.memory.moving = 5;
                 }
             }
         }
