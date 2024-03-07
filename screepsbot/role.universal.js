@@ -3,65 +3,68 @@ let roleRenew = require('role.renew');
 let roleUniversal = {
     run: function (creep, storage, spawneng, towereng, spawn, bui, bigresources) {
         if (creep.memory.hroom == creep.room.name){
-            if (spawneng == '') {
-                creep.memory.eng = false;
+            if (creep.memory.moving == '' || creep.memory.moving == undefined) {
+                creep.memory.moving = false;
+                creep.memory.doing = '';
+                creep.memory.target = '';
             }
-            if (creep.store.getFreeCapacity() == creep.store.getCapacity()) {
-                creep.memory.building = false;
-            }
-            if (creep.ticksToLive < 500 && creep.memory.eng == false && spawn != '') {
-                creep.memory.renew = true;
-            }
-            if (!creep.memory.building && (!creep.memory.renew || creep.memory.eng)) {
-                let sources = Game.getObjectById(creep.memory.sourceID);
-                if (bigresources != ''){
-                    console.log
-                    if (creep.pickup(creep.pos.findClosestByRange(bigresources)) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(creep.pos.findClosestByRange(bigresources), {visualizePathStyle: {stroke: '#ffaa00'}});
-                    }
-                } else {
-                    if (creep.harvest(sources) == ERR_NOT_IN_RANGE || creep.harvest(sources) == ERR_NOT_ENOUGH_ENERGY) {
-                        creep.moveTo(sources, {visualizePathStyle: {stroke: '#ffaa00'}});
-                    }
+            
+            if (creep.memory.moving == 0 || creep.memory.moving == false) {
+                if (creep.ticksToLive < 500 && spawneng == '' && spawn != '') {
+                    creep.memory.renew = true;
                 }
-                if (creep.store.getFreeCapacity() == 0) {
-                    creep.memory.building = true;
-                }
-            } else if (creep.memory.renew && !creep.memory.eng) {
-                if (creep.ticksToLive > 1200) {
-                    creep.memory.renew = false;
-                } else {
-                    let clost = creep.pos.findClosestByRange(spawn);
-                    if (roleRenew.renew(creep, clost) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(clost);
-                        creep.memory.eng = false;
-                    } else if (roleRenew.renew(creep, clost) == ERR_NOT_ENOUGH_ENERGY) {
+
+                if (creep.memory.renew && spawneng == '') {
+                    if (creep.ticksToLive > 1200) {
                         creep.memory.renew = false;
-                        creep.memory.eng = true;
+                    } else {
+                        creep.memory.target = creep.pos.findClosestByRange(spawn).id;
+                        creep.memory.doing = 'r';
+                    }
+                } else if (creep.store.getFreeCapacity() == creep.store.getCapacity()) {
+                    if (bigresources != ''){
+                        creep.memory.moving = 5;
+                        creep.memory.doing = 'p';
+                        creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
+                    } else {
+                        creep.memory.moving = 5;
+                        creep.memory.doing = 'h';
+                        creep.memory.target = creep.memory.sourceID;
+                    }
+                } else {
+                    if (spawneng != '') {
+                        creep.memory.moving = 5;
+                        creep.memory.doing = 't';
+                        creep.memory.target = creep.pos.findClosestByRange(spawneng).id;
+                    } else if (bui != '' && creep.room.controller.ticksToDowngrade > 5000) {
+                        creep.memory.moving = 5;
+                        creep.memory.doing = 'b';
+                        creep.memory.target = bui[0].id;
+                    } else if (creep.room.controller.level < 4 || creep.room.controller.ticksToDowngrade < 5000) {
+                        creep.memory.moving = 5;
+                        creep.memory.doing = 'u';
+                        creep.memory.target = creep.room.controller.id;
+                    } else if (towereng != '') {
+                        creep.memory.moving = 5;
+                        creep.memory.doing = 't';
+                        creep.memory.target = towereng[0].id;
+                    } else if (storage != '') {
+                        creep.memory.moving = 10;
+                        creep.memory.doing = 't';
+                        creep.memory.target = storage[0].id;
                     }
                 }
-            } else {
-                if (spawneng != '') {
-                    let clost = creep.pos.findClosestByRange(spawneng);
-                    if (creep.transfer(clost, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(clost, {visualizePathStyle: {stroke: '#ffffff'}});
-                    }
-                } else if (bui != '' && creep.room.controller.ticksToDowngrade > 5000) {
-                    if (creep.build(bui[0]) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(bui[0], {visualizePathStyle: {stroke: '#ffffff'}});
-                    }
-                } else if (creep.room.controller.level < 4) {
-                    if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
-                    }
-                } else if (towereng != '') {
-                    if (creep.transfer(towereng[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(towereng[0], {visualizePathStyle: {stroke: '#ffffff'}});
-                    }
-                } else if (storage != '') {
-                    if (creep.transfer(storage[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(storage[0], {visualizePathStyle: {stroke: '#ffffff'}});
-                    }
+            } 
+            if (creep.memory.moving != 0) {
+                let doing = creep.memory.doing;
+                let target = Game.getObjectById(creep.memory.target);
+
+                
+
+                if (target != '' && ((doing == 'h' && creep.harvest(target) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) || (doing == 'p' && creep.pickup(target) == ERR_NOT_IN_RANGE) || (doing == 'u' && creep.upgradeController(target) == ERR_NOT_IN_RANGE) || (doing == 'b' && creep.build(target) == ERR_NOT_IN_RANGE) || (doing == 'r' && creep.renew(creep,target) == ERR_NOT_IN_RANGE))) {
+                    creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
+                } else {
+                    creep.memory.moving--;
                 }
             }
         } else {

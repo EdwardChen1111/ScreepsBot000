@@ -1,5 +1,4 @@
 let roleRespawn = require('role.respawn');
-let roleSpawningtxt = require('role.spawningtxt');
 let roleUpdatingtxt = require('role.updatingtxt');
 let roleDowork = require('role.dowork');
 let roleTower = require('role.tower');
@@ -85,13 +84,24 @@ let roleRoom = {
                     return structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
                 });
             }
+
+            for (let num in spawn[0].memory.appendrange) {
+                let appendroom = Game.rooms[spawn[0].memory.appendrange[num]];
+                if (appendroom != undefined && appendroom.controller != undefined && (appendroom.controller.reservation != undefined || appendroom.controller.owner != undefined)) {
+                    targets.push(...appendroom.find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'Chenwu')}}));
+                    targetsinvtow.push(...appendroom.find(FIND_HOSTILE_STRUCTURES, {filter: (object) => {return (object.owner.username == 'Invader')}}));
+                }
+            }
+            if (targets != '') {
+                console.log(targets);
+            }/*
+            if (targetsinvtow != '') {
+                console.log(targetsinvtow);
+            }*/
         } else {
-            spawns = room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN)}});
+            spawneng = room.find(FIND_STRUCTURES, {filter: (structure) => {return ((structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.store.getFreeCapacity()>0)}});
             bui = room.find(FIND_CONSTRUCTION_SITES);
-        }
-        
-        if (bigresources != '') {
-            bigresources.sort((a,b) => b.amount - a.amount);
+            alltower = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER});
         }
         
         if (spawneng == '' && alltower != '') {
@@ -100,35 +110,19 @@ let roleRoom = {
             });
         }
         
-        if (spawn != '') {
-            for (let num in spawn[0].memory.appendrange) {
-                let appendroom = Game.rooms[spawn[0].memory.appendrange[num]];
-                if (appendroom != undefined && appendroom.controller != undefined && (appendroom.controller.reservation != undefined || appendroom.controller.owner != undefined)) {
-                    targets.push(...appendroom.find(FIND_HOSTILE_CREEPS, {filter: (creep) => {return (creep.owner.username != 'Chenwu')}}));
-                    targetsinvtow.push(...appendroom.find(FIND_HOSTILE_STRUCTURES, {filter: (object) => {return (object.owner.username == 'Invader')}}));
-                }
-            }
-            //console.log(targetsinvtow)
-        }
-        
-        if (targets != '') {
-            console.log(targets);
-        }
-        
+
         for (let name in Memory.creeps) {
             if (!Game.creeps[name] && Memory.creeps[name].roomname == roomname && Memory.creeps[name].spawn != '') {
                 roleRespawn.check(name, targets, targetsinvtow);
             }
         }
-
-        for (let spawnname in spawn) {
-            roleSpawningtxt.show(spawn[spawnname].name);
-        }
         
         if (linkid != '' && take_over_link != ''){
             for (let num in linkid) {
                 let link = linkid[num];
-                roleLink.work(link, take_over_link);
+                if (link != '' && take_over_link != '' && link != take_over_link && link.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
+                    roleLink.work(link, take_over_link);
+                }
             }
         }
         

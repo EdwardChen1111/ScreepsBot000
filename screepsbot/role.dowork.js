@@ -41,7 +41,7 @@ let roleDoWork = {
         } else if (role == 'miner') {
             roleMiner.run(creep, terminal);
         } else if (role == 'transfer') {
-            roleTransfer.run(creep, storage, terminal, died_resource);
+            roleTransfer.run(creep, storage, terminal);
         } else if (role == 'perclaim') {
             rolePerClaim.run(creep);
         }

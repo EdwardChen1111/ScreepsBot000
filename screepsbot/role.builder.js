@@ -2,7 +2,7 @@ let roleBuilder = {
     run: function (creep, bui, controllertime, storage) {
         let target = '';
         controller = creep.room.controller;
-        
+
         if (creep.store.getFreeCapacity() == creep.store.getCapacity() && storage != '' && creep.withdraw(storage[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             target = storage[0];
         } else if (controllertime > 5000 && bui != '' && creep.build(bui[0]) == ERR_NOT_IN_RANGE) {

@@ -1,7 +1,7 @@
 let roleTradingtxt = require('role.tradingtxt');
 
 let AutoSellMarket = {
-    deal: function (room,terminal,mineral) {
+    deal: function (room,terminal,mineral,name) {
         let all_orders = '', distance = '', trade_amount = '', history = '', need_price = '', answer = '';
         
         let formula = {
@@ -17,8 +17,8 @@ let AutoSellMarket = {
 
         if (terminal != '' ){
             let MineralType = mineral[0].mineralType;
-            if (terminal.cooldown == 0 && terminal.store.getUsedCapacity(MineralType) > 10000){
-                all_orders = Game.market.getAllOrders({type: ORDER_BUY, resourceType: formula[MineralType]});
+            all_orders = Game.market.getAllOrders({type: ORDER_BUY, resourceType: formula[MineralType]});
+            if (terminal.cooldown == 0 && terminal.store.getUsedCapacity(MineralType) > 10000 && all_orders != ''){
                 all_orders.sort((b,a) => a.price - b.price);
                 
                 distance = Game.map.getRoomLinearDistance(room.name, all_orders[0].roomName, true);
@@ -28,18 +28,20 @@ let AutoSellMarket = {
                 need_price = history.avgPrice + (history.stddevPrice)*0.5;
 
                 if (all_orders[0].price > need_price){
-                    if (all_orders[0].amount > trade_amount){
-                        Game.market.deal(all_orders[0].id, trade_amount, room);
+                    if (all_orders[0].amount < trade_amount){
+                        trade_amount = all_orders[0].amount;
+                    } 
+                    if (Game.market.deal(all_orders[0].id, terminal.store.getUsedCapacity(MineralType), room.roomName) == 0 ){
                         answer = `successfully and earn ${(all_orders[0].price)*(trade_amount)}`;
-                    } else {
-                        Game.market.deal(all_orders[0].id, terminal.store.getUsedCapacity(MineralType), room);
-                        answer = `successfully and earn ${(all_orders[0].price)*(all_orders[0].amount)}`;
+                    }else{
+                        answer = 'unexpect error'
                     }
-                    console.log(`💸 ${room} using [ ${MineralType} ] is now trading with ${all_orders[0].roomName} {answer}`);
                 }else{
                     answer = 'Bad price';
                 }
-                roleTradingtxt.answer(room,all_orders[0].roomName,answer)
+                
+                console.log(`💸 ${room.name} using [${formula[MineralType]}] is now trading with ${all_orders[0].roomName} ${answer}`);
+                roleTradingtxt.answer(name,all_orders[0].roomName,answer)
             }
         }
 	}
