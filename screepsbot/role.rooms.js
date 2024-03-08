@@ -93,7 +93,7 @@ let roleRoom = {
                 }
             }
             if (targets != '') {
-                console.log(targets);
+                console.log(`🚨 ${targets}`);
             }/*
             if (targetsinvtow != '') {
                 console.log(targetsinvtow);

@@ -9,7 +9,7 @@ let roleUniversal = {
                 creep.memory.target = '';
             }
             
-            if (creep.memory.moving == 0 || creep.memory.moving == false) {
+            if (creep.memory.moving == 0 || creep.memory.moving == false || creep.memory.moving == true) {
                 if (creep.ticksToLive < 500 && spawneng == '' && spawn != '') {
                     creep.memory.renew = true;
                 }
@@ -21,7 +21,8 @@ let roleUniversal = {
                         creep.memory.target = creep.pos.findClosestByRange(spawn).id;
                         creep.memory.doing = 'r';
                     }
-                } else if (creep.store.getFreeCapacity() == creep.store.getCapacity()) {
+                } else if (creep.store.getUsedCapacity() != creep.store.getCapacity()) {
+                    creep.memory.renew = false;
                     if (bigresources != ''){
                         creep.memory.moving = 5;
                         creep.memory.doing = 'p';
@@ -32,6 +33,7 @@ let roleUniversal = {
                         creep.memory.target = creep.memory.sourceID;
                     }
                 } else {
+                    creep.memory.renew = false;
                     if (spawneng != '') {
                         creep.memory.moving = 5;
                         creep.memory.doing = 't';
@@ -61,7 +63,7 @@ let roleUniversal = {
 
                 
 
-                if (target != '' && ((doing == 'h' && creep.harvest(target) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) || (doing == 'p' && creep.pickup(target) == ERR_NOT_IN_RANGE) || (doing == 'u' && creep.upgradeController(target) == ERR_NOT_IN_RANGE) || (doing == 'b' && creep.build(target) == ERR_NOT_IN_RANGE) || (doing == 'r' && creep.renew(creep,target) == ERR_NOT_IN_RANGE))) {
+                if (target != '' && ((doing == 'h' && creep.harvest(target) == ERR_NOT_IN_RANGE) || (doing == 't' && creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) || (doing == 'p' && creep.pickup(target) == ERR_NOT_IN_RANGE) || (doing == 'u' && creep.upgradeController(target) == ERR_NOT_IN_RANGE) || (doing == 'b' && creep.build(target) == ERR_NOT_IN_RANGE) || (doing == 'r' && roleRenew.renew(creep,target) == ERR_NOT_IN_RANGE))) {
                     creep.moveTo(target, {reusePath: 20, visualizePathStyle: {stroke: '#ffffff'}});
                 } else {
                     creep.memory.moving--;

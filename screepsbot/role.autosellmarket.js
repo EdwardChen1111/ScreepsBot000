@@ -31,8 +31,16 @@ let AutoSellMarket = {
                     if (all_orders[0].amount < trade_amount){
                         trade_amount = all_orders[0].amount;
                     } 
-                    if (Game.market.deal(all_orders[0].id, terminal.store.getUsedCapacity(MineralType), room.roomName) == 0 ){
+                    
+                    let so = Game.market.deal(all_orders[0].id, trade_amount, room.name);
+                    if (so == 0 ){
                         answer = `successfully and earn ${(all_orders[0].price)*(trade_amount)}`;
+                    }else if (so == -6) {
+                        answer = 'Error not enough resources'
+                    }else if (so == -8) {
+                        answer = 'Error more than 10 terminals trading in this tick'
+                    }else if (so == -10) {
+                        answer = 'Error arguments have problems'
                     }else{
                         answer = 'unexpect error'
                     }
