@@ -21,14 +21,14 @@ let roleUniversal = {
                         creep.memory.target = creep.pos.findClosestByRange(spawn).id;
                         creep.memory.doing = 'r';
                     }
-                } else if (creep.store.getUsedCapacity() != creep.store.getCapacity()) {
+                } else if (creep.store.getFreeCapacity() == creep.store.getCapacity()) {
                     creep.memory.renew = false;
                     if (bigresources != ''){
                         creep.memory.moving = 5;
                         creep.memory.doing = 'p';
                         creep.memory.target = creep.pos.findClosestByRange(bigresources).id;
                     } else {
-                        creep.memory.moving = 5;
+                        creep.memory.moving = 10;
                         creep.memory.doing = 'h';
                         creep.memory.target = creep.memory.sourceID;
                     }
