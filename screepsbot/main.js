@@ -18,7 +18,7 @@ module.exports.loop = function () {
     }
 
     if (Game.cpu.getUsed() > 16) {
-        console.log(`This tick use ${parseInt(Math.round(Game.cpu.getUsed()))} CPU`);
+        console.log(`🚨This tick use ${parseInt(Math.round(Game.cpu.getUsed()))} CPU`);
     }
     
     if (Game.cpu.getUsed() > 20) {
