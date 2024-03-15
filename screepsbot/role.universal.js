@@ -22,7 +22,7 @@ let roleUniversal = {
                         creep.memory.target = creep.pos.findClosestByRange(spawn).id;
                         creep.memory.doing = 'r';
                         creep.memory.renew = true;
-                        creep.memory.moving = 5;
+                        creep.memory.moving = 1;
                     }
                 } else if (creep.store.getFreeCapacity() == creep.store.getCapacity()) {
                     creep.memory.renew = false;
@@ -50,11 +50,11 @@ let roleUniversal = {
                         creep.memory.doing = 'u';
                         creep.memory.target = creep.room.controller.id;
                     } else if (towereng != '') {
-                        creep.memory.moving = 5;
+                        creep.memory.moving = 1;
                         creep.memory.doing = 't';
                         creep.memory.target = towereng[0].id;
                     } else if (storage != '') {
-                        creep.memory.moving = 5;
+                        creep.memory.moving = 1;
                         creep.memory.doing = 't';
                         creep.memory.target = storage[0].id;
                     }
@@ -64,7 +64,7 @@ let roleUniversal = {
                     creep.memory.renew = true;
                 }
             } 
-            if (creep.memory.moving != 0) {
+            if (creep.memory.moving > 0) {
                 let doing = creep.memory.doing;
                 let target = Game.getObjectById(creep.memory.target);
 
