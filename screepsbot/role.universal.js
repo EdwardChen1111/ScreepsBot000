@@ -33,7 +33,11 @@ let roleUniversal = {
                     } else {
                         creep.memory.moving = 25;
                         creep.memory.doing = 'h';
-                        creep.memory.target = creep.memory.sourceID;
+                        if (creep.memory.sourceID != ''){
+                            creep.memory.target = creep.memory.sourceID;
+                        }else{
+                            creep.memory.target = creep.pos.findClosestByRange(FIND_SOURCES).id;
+                        }
                     }
                 } else {
                     creep.memory.renew = false;

@@ -35,10 +35,13 @@ let roleRespawn = {
                     hroom = targetsinvtow[0].room.name;
                     standby.roomName = targetsinvtow[0].room.name;
                 }
-            } /*
-            if (){
+            } 
+            if (name == 'W27S59_Universal_1'){
+                spawn = 'W21S59_1';
+            }
+            if (name == 'W27S59_Universal_2' || name == 'W26S52_Universal_2' || name == 'W27S59_Builder_1' || name == 'W21S23_Universal_2' || name == 'W23S54_Universal_1' || name == 'W21S23_Universal_1' || name == 'W23S56_Universai_1'){
                 dospawn = false;
-            }*/
+            }
                 
             if (dospawn) {
                 if (Game.spawns[spawn].spawnCreep( body, name, { memory: { role: type, sourceID: sourceId, hroom: hroom, spawn: spawn, roomname: room, standby: standby, body: body}}) == 0){
